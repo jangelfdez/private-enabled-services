@@ -13,7 +13,8 @@
             "type": "string",
             "metadata": {
                 "description": "Prefix to add to every resource deployed"
-            }
+            },
+            "defaultValue": "pe-one-policy"
         }
     },
     "functions": [],
