@@ -190,6 +190,31 @@
                     "geoRedundantBackup": "Disabled"
                 }
             }
+        },
+        {
+            "type": "Microsoft.Devices/IotHubs",
+            "apiVersion": "2020-07-10-preview",
+            "name": "[concat(parameters('deploymentPrefix'), '-iot-hub')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "S1",
+                "capacity": "1"
+            },
+            "properties": {
+            }
+        },
+        {
+            "type": "Microsoft.Devices/provisioningServices",
+            "apiVersion": "2020-01-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-provisioning-services')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "S1",
+                "capacity": 1
+            },
+            "properties": {
+
+            }
         }
     ],
     "outputs": {}
