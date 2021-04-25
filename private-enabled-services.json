@@ -41,6 +41,31 @@
             },
             "resources": [
             ]
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-06-01",
+            "name": "[replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', '')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            "kind": "StorageV2",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Batch/batchAccounts",
+            "apiVersion": "2020-05-01",
+            "name": "[replace(concat(parameters('deploymentPrefix'), '-batch-account'),'-', '')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', ''))]"
+            ],
+            "properties": {
+                "autoStorage": {
+                    "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', ''))]"
+                }
+            }
         }
     ],
     "outputs": {}
