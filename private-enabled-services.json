@@ -27,6 +27,9 @@
             "location": "[parameters('location')]",
             "sku": {
                 "name": "standard"
+            },
+            "properties":{
+
             }
         },
         {
@@ -64,6 +67,103 @@
             "properties": {
                 "autoStorage": {
                     "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', ''))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Cache/Redis",
+            "apiVersion": "2020-06-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-redis')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "minimumTlsVersion": "1.2",
+                "sku": {
+                    "capacity": 0,
+                    "family": "C",
+                    "name": "Basic"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2017-04-18",
+            "name": "[concat(parameters('deploymentPrefix'), '-cognitive-services')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "S0"
+            },
+            "kind": "CognitiveServices",
+            "properties": {
+                "statisticsEnabled": false
+            }
+        },
+        {
+
+            "type": "Microsoft.ContainerRegistry/registries",
+            "apiVersion": "2019-12-01-preview",
+            "name": "[replace(concat(parameters('deploymentPrefix'), '-container-registry'),'-', '')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {
+            }
+        },
+        {
+            "type": "Microsoft.DataFactory/factories",
+            "apiVersion": "2018-06-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-data-factory')]",
+            "location": "[parameters('location')]",
+            "properties": {},
+            "identity": {
+                "type": "SystemAssigned"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMariaDB/servers",
+            "apiVersion": "2018-06-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-mariadb-server')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "GP_Gen5_2",
+                "tier": "GeneralPurpose",
+                "capacity": 2,
+                "size": "5120",
+                "family": "Gen5"
+            },
+            "properties": {
+                "createMode": "Default",
+                "version": "10.3",
+                "administratorLogin": "azureAdmin",
+                "administratorLoginPassword": "Passw0rd!Passw0rd!",
+                "storageProfile": {
+                    "storageMB": 5120,
+                    "backupRetentionDays": 7,
+                    "geoRedundantBackup": "Disabled"
+                }
+            }
+        },
+                {
+      "type": "Microsoft.DBforMySQL/servers",
+      "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-mysql-server')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "GP_Gen5_2",
+                "tier": "GeneralPurpose",
+                "capacity": 2,
+                "size": "5120",
+                "family": "Gen5"
+            },
+            "properties": {
+                "createMode": "Default",
+                "version": "5.7",
+                "administratorLogin": "azureAdmin",
+                "administratorLoginPassword": "Passw0rd!Passw0rd!",
+                "storageProfile": {
+                    "storageMB": 5120,
+                    "backupRetentionDays": 7,
+                    "geoRedundantBackup": "Disabled"
                 }
             }
         }
