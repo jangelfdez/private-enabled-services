@@ -206,7 +206,7 @@
         {
             "type": "Microsoft.Devices/provisioningServices",
             "apiVersion": "2020-01-01",
-            "name": "[concat(parameters('deploymentPrefix'), '-provisioning-services')]",
+            "name": "[concat(parameters('deploymentPrefix'), '-provisioning-service')]",
             "location": "[parameters('location')]",
             "sku": {
                 "name": "S1",
@@ -215,7 +215,63 @@
             "properties": {
 
             }
+        },
+        {
+            "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+            "apiVersion": "2020-12-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-digital-twin')]",
+            "location": "[parameters('location')]",
+            "properties": {
+
+            }
+        },
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "apiVersion": "2021-01-15",
+            "name": "[concat(parameters('deploymentPrefix'), '-cosmos-db')]",
+            "location": "[parameters('location')]",
+            "kind": "GlobalDocumentDB",
+            "properties": {
+                "consistencyPolicy": "Eventual",
+                "databaseAccountOfferType": "Standard"
+            }
+        },
+        {
+            "type": "Microsoft.EventGrid/domains",
+            "apiVersion": "2020-06-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-event-grid-domain')]",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "properties": {
+
+            }
+        },
+        {
+            "type": "Microsoft.EventGrid/topics",
+            "apiVersion": "2020-06-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-event-grid-topic')]",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "properties": {
+
+            }
+        },
+        {
+            "type": "Microsoft.EventHub/namespaces",
+            "apiVersion": "2018-01-01-preview",
+            "name": "[concat(parameters('deploymentPrefix'), '-event-hub-namespace')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard",
+                "tier": "Standard",
+                "capacity": 1
+            },
+            "properties": {
+                "isAutoInflateEnabled": false,
+                "maximumThroughputUnits": 0
+            }
         }
+
     ],
     "outputs": {}
 }
