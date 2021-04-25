@@ -27,6 +27,19 @@
             "sku": {
                 "name": "standard"
             }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts",
+            "apiVersion": "2020-01-13-preview",
+            "name": "[concat(parameters('deploymentPrefix'), '-automation-account')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "sku": {
+                    "name": "Basic"
+                }
+            },
+            "resources": [
+            ]
         }
     ],
     "outputs": {}
