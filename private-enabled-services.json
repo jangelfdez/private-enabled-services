@@ -28,7 +28,7 @@
             "sku": {
                 "name": "standard"
             },
-            "properties":{
+            "properties": {
 
             }
         },
@@ -143,9 +143,9 @@
                 }
             }
         },
-                {
-      "type": "Microsoft.DBforMySQL/servers",
-      "apiVersion": "2017-12-01",
+        {
+            "type": "Microsoft.DBforMySQL/servers",
+            "apiVersion": "2017-12-01",
             "name": "[concat(parameters('deploymentPrefix'), '-mysql-server')]",
             "location": "[parameters('location')]",
             "sku": {
@@ -158,6 +158,30 @@
             "properties": {
                 "createMode": "Default",
                 "version": "5.7",
+                "administratorLogin": "azureAdmin",
+                "administratorLoginPassword": "Passw0rd!Passw0rd!",
+                "storageProfile": {
+                    "storageMB": 5120,
+                    "backupRetentionDays": 7,
+                    "geoRedundantBackup": "Disabled"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.DBForPostgreSQL/servers",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-postgre-server')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "GP_Gen5_2",
+                "tier": "GeneralPurpose",
+                "capacity": 2,
+                "size": "5120",
+                "family": "Gen5"
+            },
+            "properties": {
+                "createMode": "Default",
+                "version": "11",
                 "administratorLogin": "azureAdmin",
                 "administratorLoginPassword": "Passw0rd!Passw0rd!",
                 "storageProfile": {
