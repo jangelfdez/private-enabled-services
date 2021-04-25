@@ -1,9 +1,33 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
+    "parameters": {
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Azure region where resources would be deployed"
+            },
+            "defaultValue": "westeurope"
+        },
+        "deploymentPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "Prefix to add to every resource deployed"
+            }
+        }
+    },
     "functions": [],
     "variables": {},
-    "resources": [],
+    "resources": [
+        {
+            "type": "Microsoft.AppConfiguration/configurationStores",
+            "apiVersion": "2019-10-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-app-config-store')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "standard"
+            }
+        }
+    ],
     "outputs": {}
 }
