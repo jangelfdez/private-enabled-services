@@ -14,7 +14,7 @@
             "metadata": {
                 "description": "Prefix to add to every resource deployed"
             },
-            "defaultValue": "pe-one-policy"
+            "defaultValue": "pe-policy"
         }
     },
     "functions": [],
@@ -375,6 +375,113 @@
             "location": "[parameters('location')]",
             "properties": {},
             "resources": []
+        },
+        {
+            "type": "Microsoft.SignalRService/SignalR",
+            "apiVersion": "2020-07-01-preview",
+            "name": "[concat(parameters('deploymentPrefix'), '-signalR')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "capacity": 1,
+                "name": "Standard_S1"
+            },
+            "kind": "SignalR",
+            "properties": {
+                "hostNamePrefix": "[concat(parameters('deploymentPrefix'), '-signalR')]"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers",
+            "apiVersion": "2020-02-02-preview",
+            "name": "[concat(parameters('deploymentPrefix'), '-sql-server')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "administratorLogin": "azureAdmin",
+                "administratorLoginPassword": "Passw0rd!Passw0rd!",
+                "version": "12.0"
+            },
+            "resources": [
+
+            ]
+        },
+        {
+            "type": "Microsoft.StorageSync/storageSyncServices",
+            "apiVersion": "2019-10-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-storage-sync-service')]",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "properties": {},
+            "resources": []
+        },
+        {
+            "type": "Microsoft.Synapse/privateLinkHubs",
+            "apiVersion": "2021-03-01",
+            "name": "[replace(concat(parameters('deploymentPrefix'), '-synapse-private-link-hub'),'-','')]",
+            "location": "[parameters('location')]",
+            "properties": {
+            }
+        },
+        {
+            "type": "Microsoft.TimeSeriesInsights/environments",
+            "apiVersion": "2018-08-15-preview",
+            "name": "[concat(parameters('deploymentPrefix'), '-time-series')]",
+            "location": "[parameters('location')]",
+            "kind": "LongTerm",
+            "dependsOn": [
+                "[replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', '')]"
+            ],
+            "properties": {
+
+                "warmStoreConfiguration": {
+                    "dataRetention": "P7D"
+                },
+                "storageConfiguration": {
+                    "accountName": "[replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', '')]",
+                    "managementKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', '')), '2019-06-01').keys[0].value]"
+                },
+                "timeSeriesIdProperties": [
+                    {
+                        "name": "key",
+                        "type": "String"
+                    }
+                ]
+            },
+            "sku": {
+                "name": "L1",
+                "capacity": 1
+            },
+            "resources": [
+
+            ]
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2020-06-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-webapp-service-plan')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "S1"
+            },
+            "kind": "linux",
+            "properties": {
+                "reserved": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2020-06-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-web-app')]",
+            "location": "[parameters('location')]",
+            "kind": "app",
+            "dependsOn": [
+                "[concat(parameters('deploymentPrefix'), '-webapp-service-plan')]"
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', concat(parameters('deploymentPrefix'), '-webapp-service-plan'))]",
+                "siteConfig": {
+                    "linuxFxVersion": "php|7.4"
+                }
+            }
         }
     ],
     "outputs": {}
