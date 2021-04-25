@@ -353,8 +353,29 @@
             "location": "[parameters('location')]",
             "kind": "Relay",
             "properties": {}
-        }
+        },
+        {
+            "apiVersion": "2015-02-28",
+            "name": "[concat(parameters('deploymentPrefix'), '-search')]",
+            "type": "Microsoft.Search/searchServices",
+            "location": "[parameters('location')]",
 
+            "properties": {
+                "sku": {
+                    "name": "standard"
+                },
+                "replicaCount": 1,
+                "partitionCount": 1
+            }
+        },
+        {
+            "name": "[concat(parameters('deploymentPrefix'), '-disk-access')]",
+            "type": "Microsoft.Compute/diskAccesses",
+            "apiVersion": "2020-12-01",
+            "location": "[parameters('location')]",
+            "properties": {},
+            "resources": []
+        }
     ],
     "outputs": {}
 }
