@@ -198,7 +198,7 @@
             "location": "[parameters('location')]",
             "sku": {
                 "name": "S1",
-                "capacity": "1"
+                "capacity": 1
             },
             "properties": {
             }
@@ -269,6 +269,60 @@
             "properties": {
                 "isAutoInflateEnabled": false,
                 "maximumThroughputUnits": 0
+            }
+        },
+        {
+            "type": "microsoft.insights/privateLinkScopes",
+            "apiVersion": "2019-10-17-preview",
+            "name": "[concat(parameters('deploymentPrefix'), '-insights-pl-scopes')]",
+            "location": "global",
+            "tags": {},
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-key-vault')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "tenantId": "[subscription().tenantId]",
+                "sku": {
+                    "name": "Standard",
+                    "family": "A"
+                },
+                "accessPolicies": [
+
+                ]
+            }
+        },
+        {
+
+            "type": "microsoft.insights/components",
+            "name": "[concat(parameters('deploymentPrefix'), '-app-insights')]",
+            "location": "[parameters('location')]",
+            "apiVersion": "2014-08-01",
+            "properties": {
+                "ApplicationId": "[concat(parameters('deploymentPrefix'), '-app-insights')]",
+                "Application_Type": "web"
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces",
+            "apiVersion": "2020-03-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-ml-workspace')]",
+            "location": "[parameters('location')]",
+            "identity": {
+                "type": "systemAssigned"
+            },
+            "dependsOn": [
+                "[concat(parameters('deploymentPrefix'), '-app-insights')]",
+                "[replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', '')]",
+                "[concat(parameters('deploymentPrefix'), '-key-vault')]"
+            ],
+            "properties": {
+                "storageAccount": "[resourceId('Microsoft.Storage/storageAccounts',replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', ''))]",
+                "keyVault": "[resourceId('Microsoft.KeyVault/vaults',concat(parameters('deploymentPrefix'), '-key-vault'))]",
+                "applicationInsights": "[resourceId('Microsoft.Insights/components', concat(parameters('deploymentPrefix'), '-app-insights'))]"
             }
         }
 
