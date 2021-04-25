@@ -324,6 +324,35 @@
                 "keyVault": "[resourceId('Microsoft.KeyVault/vaults',concat(parameters('deploymentPrefix'), '-key-vault'))]",
                 "applicationInsights": "[resourceId('Microsoft.Insights/components', concat(parameters('deploymentPrefix'), '-app-insights'))]"
             }
+        },
+        {
+            "type": "Microsoft.Migrate/assessmentProjects",
+            "apiVersion": "2019-10-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-migration-assesment')]",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "properties": {
+            },
+            "resources": []
+        },
+        {
+            "type": "Microsoft.RecoveryServices/vaults",
+            "apiVersion": "2018-01-10",
+            "name": "[concat(parameters('deploymentPrefix'), '-recover-services-vault')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "RS0",
+                "tier": "Standard"
+            },
+            "properties": {}
+        },
+        {
+            "apiVersion": "2017-04-01",
+            "type": "Microsoft.Relay/Namespaces",
+            "name": "[concat(parameters('deploymentPrefix'), '-relay-namespace')]",
+            "location": "[parameters('location')]",
+            "kind": "Relay",
+            "properties": {}
         }
 
     ],
