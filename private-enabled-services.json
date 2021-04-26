@@ -15,10 +15,17 @@
                 "description": "Prefix to add to every resource deployed"
             },
             "defaultValue": "pe-policy"
+        },
+        "random": {
+            "type": "string",
+            "metadata": {
+                "description": "Generates random string to use in the template"
+            },
+            "defaultValue": "[newGuid()]"
         }
     },
     "functions": [],
-    "variables": {},
+    "variables": {    },
     "resources": [
         {
             "type": "Microsoft.AppConfiguration/configurationStores",
@@ -282,7 +289,7 @@
         {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2019-09-01",
-            "name": "[concat(parameters('deploymentPrefix'), '-keys-vault')]",
+            "name": "[concat(parameters('deploymentPrefix'), '-key-vault-',  substring(parameters('random'),0,3))]",
             "location": "[parameters('location')]",
             "properties": {
                 "tenantId": "[subscription().tenantId]",
@@ -292,8 +299,7 @@
                 },
                 "accessPolicies": [
 
-                ],
-                "enablePurgeProtection": false
+                ]
             }
         },
         {
@@ -318,11 +324,11 @@
             "dependsOn": [
                 "[concat(parameters('deploymentPrefix'), '-app-insights')]",
                 "[replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', '')]",
-                "[concat(parameters('deploymentPrefix'), '-keys-vault')]"
+                "[concat(parameters('deploymentPrefix'), '-key-vault-',  substring(parameters('random'),0,3))]"
             ],
             "properties": {
                 "storageAccount": "[resourceId('Microsoft.Storage/storageAccounts',replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', ''))]",
-                "keyVault": "[resourceId('Microsoft.KeyVault/vaults',concat(parameters('deploymentPrefix'), '-keys-vault'))]",
+                "keyVault": "[resourceId('Microsoft.KeyVault/vaults',concat(parameters('deploymentPrefix'), '-key-vault-',  substring(parameters('random'),0,3)))]",
                 "applicationInsights": "[resourceId('Microsoft.Insights/components', concat(parameters('deploymentPrefix'), '-app-insights'))]"
             }
         },
@@ -484,7 +490,21 @@
                     "linuxFxVersion": "php|7.4"
                 }
             }
+        },
+        {
+            "type": "Microsoft.ServiceBus/namespaces",
+            "apiVersion": "2018-01-01-preview",
+            "name": "[concat(parameters('deploymentPrefix'), '-service-bus')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard",
+                "tier": "Standard"
+            },
+            "properties": {
+            },
+            "resources": []
         }
+
     ],
     "outputs": {}
 }
