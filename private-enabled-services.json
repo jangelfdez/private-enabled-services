@@ -282,7 +282,7 @@
         {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2019-09-01",
-            "name": "[concat(parameters('deploymentPrefix'), '-key-vault')]",
+            "name": "[concat(parameters('deploymentPrefix'), '-keys-vault')]",
             "location": "[parameters('location')]",
             "properties": {
                 "tenantId": "[subscription().tenantId]",
@@ -292,7 +292,8 @@
                 },
                 "accessPolicies": [
 
-                ]
+                ],
+                "enablePurgeProtection": false
             }
         },
         {
@@ -317,11 +318,11 @@
             "dependsOn": [
                 "[concat(parameters('deploymentPrefix'), '-app-insights')]",
                 "[replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', '')]",
-                "[concat(parameters('deploymentPrefix'), '-key-vault')]"
+                "[concat(parameters('deploymentPrefix'), '-keys-vault')]"
             ],
             "properties": {
                 "storageAccount": "[resourceId('Microsoft.Storage/storageAccounts',replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', ''))]",
-                "keyVault": "[resourceId('Microsoft.KeyVault/vaults',concat(parameters('deploymentPrefix'), '-key-vault'))]",
+                "keyVault": "[resourceId('Microsoft.KeyVault/vaults',concat(parameters('deploymentPrefix'), '-keys-vault'))]",
                 "applicationInsights": "[resourceId('Microsoft.Insights/components', concat(parameters('deploymentPrefix'), '-app-insights'))]"
             }
         },
@@ -365,7 +366,8 @@
                     "name": "standard"
                 },
                 "replicaCount": 1,
-                "partitionCount": 1
+                "partitionCount": 1,
+                "publicNetworkAccess": "Disabled"
             }
         },
         {
