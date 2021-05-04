@@ -14,7 +14,7 @@
             "metadata": {
                 "description": "Prefix to add to every resource deployed"
             },
-            "defaultValue": "pe-policy"
+            "defaultValue": "pe-testing"
         },
         "random": {
             "type": "string",
@@ -25,7 +25,7 @@
         }
     },
     "functions": [],
-    "variables": {    },
+    "variables": {},
     "resources": [
         {
             "type": "Microsoft.AppConfiguration/configurationStores",
@@ -74,7 +74,8 @@
             "properties": {
                 "autoStorage": {
                     "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', replace(concat(parameters('deploymentPrefix'), '-st-ac'),'-', ''))]"
-                }
+                },
+                "publicNetworkAccess": "Disabled"
             }
         },
         {
@@ -97,11 +98,15 @@
             "name": "[concat(parameters('deploymentPrefix'), '-cognitive-services')]",
             "location": "[parameters('location')]",
             "sku": {
-                "name": "S0"
+                "name": "S1"
             },
-            "kind": "CognitiveServices",
+            "kind": "ComputerVision",
+
             "properties": {
-                "statisticsEnabled": false
+                "statisticsEnabled": false,
+                "publicNetworkAccess": "Disabled",
+                "customSubDomainName": "[concat(parameters('deploymentPrefix'), '-cognitive-services')]"
+
             }
         },
         {
@@ -111,7 +116,7 @@
             "name": "[replace(concat(parameters('deploymentPrefix'), '-container-registry'),'-', '')]",
             "location": "[parameters('location')]",
             "sku": {
-                "name": "Standard"
+                "name": "Premium"
             },
             "properties": {
             }
@@ -345,7 +350,7 @@
         {
             "type": "Microsoft.RecoveryServices/vaults",
             "apiVersion": "2018-01-10",
-            "name": "[concat(parameters('deploymentPrefix'), '-recover-services-vault')]",
+            "name": "[concat(parameters('deploymentPrefix'), '-rs-vault')]",
             "location": "[parameters('location')]",
             "sku": {
                 "name": "RS0",
@@ -362,7 +367,7 @@
             "properties": {}
         },
         {
-            "apiVersion": "2015-02-28",
+            "apiVersion": "2020-08-01",
             "name": "[concat(parameters('deploymentPrefix'), '-search')]",
             "type": "Microsoft.Search/searchServices",
             "location": "[parameters('location')]",
@@ -373,7 +378,12 @@
                 },
                 "replicaCount": 1,
                 "partitionCount": 1,
-                "publicNetworkAccess": "Disabled"
+                "hostingMode": "Default",
+                "publicNetworkAccess": "Disabled",
+                "networkRuleSet": {
+                    "ipRules": [],
+                    "endpointAccess": "Private"
+                }
             }
         },
         {
@@ -468,7 +478,11 @@
             "name": "[concat(parameters('deploymentPrefix'), '-webapp-service-plan')]",
             "location": "[parameters('location')]",
             "sku": {
-                "name": "S1"
+                "name": "P1v2",
+                "tier": "PremiumV2",
+                "size": "P1v2",
+                "family": "Pv2",
+                "capacity": 1
             },
             "kind": "linux",
             "properties": {
@@ -497,8 +511,8 @@
             "name": "[concat(parameters('deploymentPrefix'), '-service-bus')]",
             "location": "[parameters('location')]",
             "sku": {
-                "name": "Standard",
-                "tier": "Standard"
+                "name": "Premium",
+                "tier": "Premium"
             },
             "properties": {
             },
