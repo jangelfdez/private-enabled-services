@@ -371,11 +371,11 @@
             "name": "[concat(parameters('deploymentPrefix'), '-search')]",
             "type": "Microsoft.Search/searchServices",
             "location": "[parameters('location')]",
-
+            "sku": {
+                "name": "standard"
+            },
             "properties": {
-                "sku": {
-                    "name": "standard"
-                },
+
                 "replicaCount": 1,
                 "partitionCount": 1,
                 "hostingMode": "Default",
