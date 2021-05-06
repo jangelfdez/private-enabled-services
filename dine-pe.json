@@ -38,8 +38,8 @@
 							"excludedPrivateEndpointResourceTypes": {
 								"value": "[parameters('excludedPrivateEndpointResourceTypes')]"
 							},
-							"scriptDeploymentStorageAccountName": {
-								"value": "[parameters('scriptDeploymentStorageAccountName')]"
+							"scriptDeploymentStorageAccountId": {
+								"value": "[parameters('scriptDeploymentStorageAccountId')]"
 							},
 							"privateEndpointResourceGroupName": {
 								"value": "[parameters('privateEndpointResourceGroupName')]"
@@ -67,7 +67,7 @@
 								"excludedPrivateEndpointResourceTypes": {
 									"type": "array"
 								},
-								"scriptDeploymentStorageAccountName": {
+								"scriptDeploymentStorageAccountId": {
 									"type": "string"
 								},
 								"privateEndpointResourceGroupName": {
@@ -96,8 +96,8 @@
 											"scriptDeploymentManagedIdentityId": {
 												"value": "[parameters('scriptDeploymentManagedIdentityId')]"
 											},
-											"scriptDeploymentStorageAccountName": {
-												"value": "[parameters('scriptDeploymentStorageAccountName')]"
+											"scriptDeploymentStorageAccountId": {
+												"value": "[parameters('scriptDeploymentStorageAccountId')]"
 											},
 											"privateEndpointNamePrefix": {
 												"value": "[parameters('privateEndpointNamePrefix')]"
@@ -113,7 +113,7 @@
 												"scriptDeploymentManagedIdentityId": {
 													"type": "string"
 												},
-												"scriptDeploymentStorageAccountName": {
+												"scriptDeploymentStorageAccountId": {
 													"type": "string"
 												},
 												"privateEndpointNamePrefix": {
@@ -142,8 +142,8 @@
 													},
 													"properties": {
 														"storageAccountSettings": {
-															"storageAccountName": "[split(parameters('scriptDeploymentStorageAccountName'),'/')[8]]",
-															"storageAccountKey": "[listKeys(parameters('scriptDeploymentStorageAccountName'), '2019-06-01').keys[0].value]"
+															"storageAccountName": "[split(parameters('scriptDeploymentStorageAccountId'),'/')[8]]",
+															"storageAccountKey": "[listKeys(parameters('scriptDeploymentStorageAccountId'), '2019-06-01').keys[0].value]"
 														},
 														"azPowerShellVersion": "5.6",
 														"arguments": "[concat('-ResourceId ', parameters('resourceId'))]",
@@ -294,7 +294,7 @@
 				"description": "Your managed identity is used to query the required information in your subscription to automatically configure your private endpoints associated with the resources defiined by parameter privateLinkAvailableResourceTypes. It should be defined in the following format /subscriptions/[Subscription Id]/resourceGroups/[Resource Group]/providers/Microsoft.ManagedIdentity/userAssignedIdentities/[UserManagedIdentityName]"
 			}
 		},
-		"scriptDeploymentStorageAccountName": {
+		"scriptDeploymentStorageAccountId": {
 			"type": "String",
 			"metadata": {
 				"displayName": "Storage account where required scripts by this policy would be stored.",

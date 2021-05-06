@@ -1,6 +1,6 @@
 ### Change these properties. They are required
 $subscriptionId = "b53326a7-7584-414c-8f60-8fc2df57cee3"
-$storageAccountName = "pepolicysa"
+$storageAccountName = "pepolicysaxzx"
 $deploymentPrefix = "zwx"
 
 ### Optional properties
@@ -44,7 +44,7 @@ $assignment = New-AzPolicyAssignment -Name $policyName -DisplayName $policyDispl
                        -PolicyDefinition $policyDefinition `
                        -privateEndpointSubnetId (Get-AzVirtualNetwork -Name $virtualNetworkName -ResourceGroupName $networkingResourceGroupName).Subnets[0].Id `
                        -scriptDeploymentManagedIdentityId $identity.Id `
-                       -scriptDeploymentStorageAccountName $storageAccount.Id `
+                       -scriptDeploymentStorageAccountId $storageAccount.Id `
                        -privateEndpointResourceGroupName $networkingResourceGroupName `
                        -scriptDeploymentResourceGroupName $scriptDeploymentResourceGroupName `
                        -AssignIdentity -Location $location
