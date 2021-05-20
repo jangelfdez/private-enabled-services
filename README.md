@@ -1,3 +1,46 @@
+# Policies in this repo
+
+- [PublicNetworkAccess - Audit if not Disabled policy](#publicnetworkaccess-audit-if-not-disabled-policy)
+- [Private Endpoint - Deploy if not exist policy](#private-endpoint-deploy-if-not-exist-policy)
+
+# PublicNetworkAccess - Audit if not Disabled policy
+
+This policy provides support to audit resources that has *publicNetworkAccess* property configured as *Enabled* and generates a compliance issue.
+
+## Pre-requisities
+
+- A resource group where the resources associated with the Azure Deployment Script included in this policy would be temporarily created.
+
+## Step-by-step scenario
+
+You can deploy a reference scenario from scratch using the [step-by-step-example-audit-pna.ps1](step-by-step-example-audit-pna.ps1) script. It  follows the next steps:
+
+1. Creates one resources group to:
+    - Deploy every resource that support *publicNetworkAccess* alias to evaluate the policy. Other services could be deployed because a single template is used for all scenarios.
+2. Create the policy an assigment with a scope associated to the resource group where Azure services are deployed.
+3. Assign the proper RBAC permissions to managed identitys.
+4. Deploy the resources.
+
+After that, you should wait till the Policy is trigerred and compliance results area available.
+
+## Policy configuration
+
+### Required parameters
+
+N/A
+
+### Optional parameters
+
+- *effect*
+  - "type": "string",
+  - "displayName": "Select the effect of this polic",
+  - "description": "Configures the effect of this policy. Default value is Audit."
+
+- *publicNetworkAccessAvailableResourceTypes*
+  - "type": "Array",
+  - "displayName": "Resource types available to be evaluated",
+  - "description": "Collection of resource types that support restricting public network access"
+
 # Private Endpoint - Deploy if not exist policy
 
 This policy provides support to automatically create private endpoints for all the services that support it inside your environment.
@@ -78,3 +121,4 @@ After that, you should wait till the Policy is trigerred and your private endpoi
   - "type": "Array",
   - "displayName": "Resource types available to be evaluated",
   - "description": "Collection of resource types that would be automatically configured with a private endpoint using this policy if is not in the exclude list defined by parameter excludedPrivateEndpointResourceTypes"
+
