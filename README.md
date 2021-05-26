@@ -60,7 +60,7 @@ This policy provides support to automatically create private endpoints for all t
 
 ## Step-by-step scenario
 
-You can deploy a reference scenario from scratch using the [step-by-step-example.ps1](step-by-step-example.ps1) script. It  follows the next steps:
+You can deploy a reference scenario from scratch using the [step-by-step-example-dine-pe.ps1](step-by-step-example-dine-pe.ps1) script. It  follows the next steps:
 
 1. Create three resources group to:
     - Group all networking resources.
