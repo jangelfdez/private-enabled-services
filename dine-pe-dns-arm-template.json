@@ -1,0 +1,185 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"resourceId": {
+			"type": "string"
+		},
+		"privateDnsZoneId": {
+			"type": "string"
+		},
+		"scriptDeploymentManagedIdentityId": {
+			"type": "string"
+		},
+		"privateDnsZoneNamePrefix": {
+			"type": "string"
+		},
+		"scriptDeploymentStorageAccountId": {
+			"type": "string"
+		},
+		"privateDnsZoneResourceGroupName": {
+			"type": "string"
+		},
+		"scriptDeploymentResourceGroupName": {
+			"type": "string"
+		}
+	},
+	"variables": {},
+	"resources": [
+		{
+			"type": "Microsoft.Resources/deployments",
+			"name": "[concat(parameters('privateDnsZoneNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8],'DeploymentScript')]",
+			"apiVersion": "2020-06-01",
+			"resourceGroup": "[parameters('scriptDeploymentResourceGroupName')]",
+			"properties": {
+				"mode": "Incremental",
+				"expressionEvaluationOptions": {
+					"scope": "inner"
+				},
+				"parameters": {
+					"resourceId": {
+						"value": "[parameters('resourceId')]"
+					},
+					"scriptDeploymentManagedIdentityId": {
+						"value": "[parameters('scriptDeploymentManagedIdentityId')]"
+					},
+					"scriptDeploymentStorageAccountId": {
+						"value": "[parameters('scriptDeploymentStorageAccountId')]"
+					},
+					"privateDnsZoneNamePrefix": {
+						"value": "[parameters('privateDnsZoneNamePrefix')]"
+					}
+				},
+				"template": {
+					"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+					"contentVersion": "1.0.0.0",
+					"parameters": {
+						"resourceId": {
+							"type": "string"
+						},
+						"scriptDeploymentManagedIdentityId": {
+							"type": "string"
+						},
+						"scriptDeploymentStorageAccountId": {
+							"type": "string"
+						},
+						"privateDnsZoneNamePrefix": {
+							"type": "string"
+						}
+					},
+					"variables": {},
+					"outputs": {
+						"zoneNames": {
+							"type": "array",
+							"value": "[reference(concat(parameters('privateDnsZoneNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8],'DeploymentScriptNested')).outputs.zoneNames]"
+						}
+					},
+					"resources": [
+						{
+							"type": "Microsoft.Resources/deploymentScripts",
+							"name": "[concat(parameters('privateDnsZoneNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8],'DeploymentScriptNested')]",
+							"apiVersion": "2020-10-01",
+							"location": "westeurope",
+							"kind": "AzurePowerShell",
+							"identity": {
+								"type": "UserAssigned",
+								"userAssignedIdentities": {
+									"[parameters('scriptDeploymentManagedIdentityId')]": {}
+								}
+							},
+							"properties": {
+								"storageAccountSettings": {
+									"storageAccountName": "[split(parameters('scriptDeploymentStorageAccountId'),'/')[8]]",
+									"storageAccountKey": "[listKeys(parameters('scriptDeploymentStorageAccountId'), '2019-06-01').keys[0].value]"
+								},
+								"azPowerShellVersion": "5.6",
+								"arguments": "[concat('-ResourceId ', parameters('resourceId'))]",
+								"scriptContent": "param([string] $ResourceId) \n $apiVersionPath = '/subscriptions/' + $($ResourceId.Split('/')[2]) + '/resourceGroups/' + $($ResourceId.Split('/')[4])+ '/providers/Microsoft.Network/locations/westcentralus/availablePrivateEndpointTypes?api-version=2019-02-01' \n  $apiVersion = ((ConvertFrom-Json (Invoke-AzRestMethod -Path $apiVersionPath -Method GET).content).value  | Where-Object resourcename -like \"$($ResourceId.Split('/')[6])/$($ResourceId.Split('/')[7])\" | Select apiVersion).apiVersion \n $path = $ResourceId + '/privateLinkResources?api-version=' + $apiVersion \n $DeploymentScriptOutputs = @{} \n $DeploymentScriptOutputs['zoneNames'] = [array](ConvertFrom-Json (Invoke-AzRestMethod -Path $path -Method GET).Content).value.properties.requiredZoneNames",
+								"timeout": "PT5M",
+								"cleanupPreference": "Always",
+								"retentionInterval": "PT1H"
+							}
+						}
+					]
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"name": "[concat(parameters('privateDnsZoneNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8],'NestedDeployment')]",
+			"apiVersion": "2020-06-01",
+			"resourceGroup": "[parameters('privateDnsZoneResourceGroupName')]",
+			"dependsOn": [
+				"[concat(parameters('privateDnsZoneNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8],'DeploymentScript')]"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"expressionEvaluationOptions": {
+					"scope": "inner"
+				},
+				"parameters": {
+					"resourceId": {
+						"value": "[parameters('resourceId')]"
+					},
+					"privateDnsZoneId": {
+						"value": "[parameters('privateDnsZoneId')]"
+					},
+					"privateDnsZoneLocation": {
+						"value": "[reference(first(take(split(parameters('privateEndpointSubnetId'),'/subnets'),1)),'2020-07-01','Full').location]"
+					},
+					"zoneNames": {
+						"value": "[reference(concat(parameters('privateDnsZoneNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8],'DeploymentScript')).outputs.zoneNames.value]"
+					},
+					"privateDnsZoneName": {
+						"value": "[concat(parameters('privateDnsZoneNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8])]"
+					}
+				},
+				"template": {
+					"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+					"contentVersion": "1.0.0.0",
+					"parameters": {
+						"resourceId": {
+							"type": "string"
+						},
+						"privateDnsZoneId": {
+							"type": "string"
+						},
+						"privateDnsZoneLocation": {
+							"type": "string"
+						},
+						"zoneNames": {
+							"type": "array"
+						},
+						"privateDnsZoneName": {
+							"type": "string"
+						}
+					},
+					"variables": {},
+					"outputs": {},
+					"resources": [
+						{
+							"name": "[concat(parameters('privateDnsZoneName'), parameters('zoneNames')[copyIndex()])]",
+							"type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+							"apiVersion": "2020-08-01",
+							"location": "[parameters('privateDnsZoneLocation')]",
+							"copy": {
+								"name": "privateLinkCopy",
+								"count": "[length(parameters('zoneNames'))]"
+							},
+							"properties": {
+								"privateDnsZoneConfigs": [
+									{
+										"name": "[concat(parameters('privateDnsZoneName'), parameters('zoneNames')[copyIndex()])]",
+										"properties": {
+											"privateDnsZoneId": "[parameters('zoneNames')[copyIndex()]]"
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		}
+	]
+} 

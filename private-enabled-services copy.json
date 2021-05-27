@@ -1,0 +1,44 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Azure region where resources would be deployed"
+            },
+            "defaultValue": "westeurope"
+        },
+        "deploymentPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "Prefix to add to every resource deployed"
+            },
+            "defaultValue": "pe-testing"
+        },
+        "random": {
+            "type": "string",
+            "metadata": {
+                "description": "Generates random string to use in the template"
+            },
+            "defaultValue": "[newGuid()]"
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.AppConfiguration/configurationStores",
+            "apiVersion": "2019-10-01",
+            "name": "[concat(parameters('deploymentPrefix'), '-app-config-store')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "standard"
+            },
+            "properties": {
+
+            }
+        }
+    ],
+    "outputs": {}
+}

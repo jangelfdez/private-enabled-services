@@ -1,0 +1,44 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceId": {
+            "value": "/subscriptions/8f3aef84-3beb-422f-b4f5-f2738fa800db/resourceGroups/test-policy-resource/providers/Microsoft.Storage/storageAccounts/testpolicyresourcesa"
+        },
+        "privateEndpointSubnetId": {
+            "value": "/subscriptions/474c9bf8-e183-4997-ab26-6920b1169f92/resourcegroups/test-policy-vnet/providers/microsoft.network/virtualnetworks/test-vnet/subnets/default"
+        },
+        "scriptDeploymentManagedIdentityId": {
+            "value": "/subscriptions/8f3aef84-3beb-422f-b4f5-f2738fa800db/resourcegroups/temp-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-policy"
+        },
+        "privateEndpointNamePrefix": {
+            "value": "pe"
+        },
+        "excludedPrivateEndpointResourceTypes": {
+            "value": [
+                "Microsoft.Storage/storageAccounts/table",
+                "Microsoft.Storage/storageAccounts/queue",
+                "Microsoft.Storage/storageAccounts/web",
+                "Microsoft.Storage/storageAccounts/dfs"
+            ]
+        },
+        "scriptDeploymentStorageAccountId": {
+            "value": "/subscriptions/8f3aef84-3beb-422f-b4f5-f2738fa800db/resourcegroups/temp-resources/providers/microsoft.storage/storageaccounts/policytestsaaa"
+        },
+        "privateEndpointResourceGroupName": {
+            "value": "test-policy-vnet"
+        },
+        "scriptDeploymentResourceGroupName": {
+            "value": "temp-resources"
+        },
+        "location": {
+            "value": "westeurope"
+        },
+        "subnetManagementGroup": {
+            "value": "jangelfdez"
+        },
+        "subnetSubscriptionId": {
+            "value": "474c9bf8-e183-4997-ab26-6920b1169f92"
+        }
+    }
+}

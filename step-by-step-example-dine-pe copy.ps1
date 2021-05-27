@@ -1,13 +1,16 @@
 ### Change these properties. They are required
 $subscriptionId = "b53326a7-7584-414c-8f60-8fc2df57cee3"
-$storageAccountName = "pepolicysaxzx"
-$deploymentPrefix = "zwx"
+$storageAccountName = "pepolicysapol"
+$deploymentPrefix = "yxz"
 
 ### Optional properties
 $ErrorActionPreference = "Stop"
 $location = "West Europe"
 
 $policyDefinitionFile = ".\dine-pe.json"
+$policyName = "Deploy Private Endpoint for supported services"
+$policyDisplayName = "Deploy Private Endpoint for supported services"
+
 $resourcesTemplate = ".\private-enabled-services.json"
 
 $networkingResourceGroupName = "pe-net-rg"
@@ -19,8 +22,7 @@ $virtualNetworkAddressPrefix = "10.0.0.0/24"
 
 $managedIdentityName = "pe-identity"
 
-$policyName = "Deploy Private Endpoint for supported services"
-$policyDisplayName = "Deploy Private Endpoint for supported services"
+
 
 ### Deployment Script
 
@@ -42,11 +44,12 @@ $policyDefinition = New-AzPolicyDefinition -Name $policyName -DisplayName $polic
 $assignment = New-AzPolicyAssignment -Name $policyName -DisplayName $policyDisplayName `
                        -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId `
                        -PolicyDefinition $policyDefinition `
-                       -privateEndpointSubnetId (Get-AzVirtualNetwork -Name $virtualNetworkName -ResourceGroupName $networkingResourceGroupName).Subnets[0].Id `
+                       -privateEndpointSubnetId "/subscriptions/474c9bf8-e183-4997-ab26-6920b1169f92/resourceGroups/test-policy-vnet/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/default" `
                        -scriptDeploymentManagedIdentityId $identity.Id `
                        -scriptDeploymentStorageAccountId $storageAccount.Id `
                        -privateEndpointResourceGroupName $networkingResourceGroupName `
                        -scriptDeploymentResourceGroupName $scriptDeploymentResourceGroupName `
+                       -subnetManagementGroup "jangelfdez" -subnetSubscriptionId "474c9bf8-e183-4997-ab26-6920b1169f92" `
                        -AssignIdentity -Location $location
 
 Start-Sleep -Seconds 120
