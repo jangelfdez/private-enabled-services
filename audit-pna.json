@@ -2,24 +2,351 @@
 	"mode": "All",
 	"policyRule": {
 		"if": {
-			"allOf": [
+			"anyOf": [
 				{
-					"field": "type",
-					"in": "[parameters('publicNetworkAccessAvailableResourceTypes')]"
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.AppConfiguration/configurationStores"
+						},
+						{
+							"field": "Microsoft.AppConfiguration/configurationStores/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
 				},
 				{
-					"value": "[concat(field('type'), '/publicNetwokAccess')]",
-					"like": "Disabled"
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.Automation/automationAccounts"
+						},
+						{
+							"field": "Microsoft.Automation/automationAccounts/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.Batch/batchAccounts"
+						},
+						{
+							"field": "Microsoft.Batch/batchAccounts/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.Cache/Redis"
+						},
+						{
+							"field": "Microsoft.Cache/Redis/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.CognitiveServices/accounts"
+						},
+						{
+							"field": "Microsoft.CognitiveServices/accounts/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.ContainerRegistry/registries"
+						},
+						{
+							"field": "Microsoft.ContainerRegistry/registries/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.DataFactory/factories"
+						},
+						{
+							"field": "Microsoft.DataFactory/factories/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.DBforMariaDB/servers"
+						},
+						{
+							"field": "Microsoft.DBforMariaDB/servers/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.DBForMySql/flexibleServers"
+						},
+						{
+							"field": "Microsoft.DBForMySql/flexibleServers/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.DBforMySQL/servers"
+						},
+						{
+							"field": "Microsoft.DBforMySQL/servers/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.DBForPostgreSql/flexibleServers"
+						},
+						{
+							"field": "Microsoft.DBForPostgreSql/flexibleServers/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.DBforPostgreSQL/servers"
+						},
+						{
+							"field": "Microsoft.DBforPostgreSQL/servers/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.Devices/IotHubs"
+						},
+						{
+							"field": "Microsoft.Devices/IotHubs/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.Devices/provisioningServices"
+						},
+						{
+							"field": "Microsoft.Devices/provisioningServices/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.DigitalTwins/digitalTwinsInstances"
+						},
+						{
+							"field": "Microsoft.DigitalTwins/digitalTwinsInstances/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.DocumentDB/databaseAccounts"
+						},
+						{
+							"field": "Microsoft.DocumentDB/databaseAccounts/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.EventGrid/domains"
+						},
+						{
+							"field": "Microsoft.EventGrid/domains/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.EventGrid/topics"
+						},
+						{
+							"field": "Microsoft.EventGrid/topics/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.HealthcareApis/services"
+						},
+						{
+							"field": "Microsoft.HealthcareApis/services/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.HybridCompute/privateLinkScopes"
+						},
+						{
+							"field": "Microsoft.HybridCompute/privateLinkScopes/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.Migrate/assessmentProjects"
+						},
+						{
+							"field": "Microsoft.Migrate/assessmentProjects/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.Purview/accounts"
+						},
+						{
+							"field": "Microsoft.Purview/accounts/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.Search/searchServices"
+						},
+						{
+							"field": "Microsoft.Search/searchServices/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.SignalRService/webPubSub"
+						},
+						{
+							"field": "Microsoft.SignalRService/webPubSub/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.Sql/servers"
+						},
+						{
+							"field": "Microsoft.Sql/servers/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.Synapse/workspaces"
+						},
+						{
+							"field": "Microsoft.Synapse/workspaces/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.Web/sites/config"
+						},
+						{
+							"field": "Microsoft.Web/sites/config/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"field": "type",
+							"in": "Microsoft.Web/sites/slots/config"
+						},
+						{
+							"field": "Microsoft.Web/sites/slots/config/publicNetwokAccess",
+							"equals": "Disabled"
+						}
+					]
 				}
 			]
-
 		},
 		"then": {
 			"effect": "[parameters('effect')]"
 		}
 	},
 	"parameters": {
-		"effect":{
+		"effect": {
 			"type": "String",
 			"metadata": {
 				"displayName": "Select the effect of this policy",
@@ -28,44 +355,8 @@
 			"defaultValue": "Audit",
 			"allowedValues": [
 				"Audit",
+				"Deny",
 				"Disabled"
-			]
-		},
-		"publicNetworkAccessAvailableResourceTypes": {
-			"type": "Array",
-			"metadata": {
-				"displayName": "Resource types evaluated by this policy",
-				"description": "Collection of resource types that support restricting public network access"
-			},
-			"defaultValue": [
-				"Microsoft.AppConfiguration/configurationStores",
-				"Microsoft.Automation/automationAccounts",
-				"Microsoft.Batch/batchAccounts",
-				"Microsoft.Cache/Redis",
-				"Microsoft.CognitiveServices/accounts",
-				"Microsoft.ContainerRegistry/registries",
-				"Microsoft.DataFactory/factories",
-				"Microsoft.DBforMariaDB/servers",
-				"Microsoft.DBForMySql/flexibleServers",
-				"Microsoft.DBforMySQL/servers",
-				"Microsoft.DBForPostgreSql/flexibleServers",
-				"Microsoft.DBforPostgreSQL/servers",
-				"Microsoft.Devices/IotHubs",
-				"Microsoft.Devices/provisioningServices",
-				"Microsoft.DigitalTwins/digitalTwinsInstances",
-				"Microsoft.DocumentDB/databaseAccounts",
-				"Microsoft.EventGrid/domains",
-				"Microsoft.EventGrid/topics",
-				"Microsoft.HealthcareApis/services",
-				"Microsoft.HybridCompute/privateLinkScopes",
-				"Microsoft.Migrate/assessmentProjects",
-				"Microsoft.Purview/accounts",
-				"Microsoft.Search/searchServices",
-				"Microsoft.SignalRService/webPubSub",
-				"Microsoft.Sql/servers",
-				"Microsoft.Synapse/workspaces",
-				"Microsoft.Web/sites/config",
-				"Microsoft.Web/sites/slots/config"
 			]
 		}
 	}
