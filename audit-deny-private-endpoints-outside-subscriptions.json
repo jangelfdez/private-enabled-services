@@ -7,21 +7,6 @@
 					"field": "type",
 					"in": "Microsoft.Network/privateEndpoints"
 				},
-<<<<<<< HEAD
-				{
-					"anyOf": [
-						{
-							"value": "[split('Microsoft.Network/privateEndpoints/privateLinkServiceConnections[*].privateLinkServiceId', '/')[2]]",
-							"notIn": "[parameters('allowedSubscriptions')]"
-						},
-						{
-							"value": "[split('Microsoft.Network/privateEndpoints/manualPrivateLinkServiceConnections[*].privateLinkServiceId', '/')[2]]",
-							"notIn": "[parameters('allowedSubscriptions')]"
-						}
-					]
-				}
-			]
-=======
         {
           "anyOf": [
             {
@@ -36,18 +21,13 @@
         }
 			]
 
->>>>>>> f29ce6f5f79a2d9018fafe05998047dfe126ac93
 		},
 		"then": {
 			"effect": "[parameters('effect')]"
 		}
 	},
 	"parameters": {
-<<<<<<< HEAD
 		"effect": {
-=======
-		"effect":{
->>>>>>> f29ce6f5f79a2d9018fafe05998047dfe126ac93
 			"type": "String",
 			"metadata": {
 				"displayName": "Select the effect of this policy",
@@ -56,11 +36,7 @@
 			"defaultValue": "Audit",
 			"allowedValues": [
 				"Audit",
-<<<<<<< HEAD
 				"Deny",
-=======
-        "Deny",
->>>>>>> f29ce6f5f79a2d9018fafe05998047dfe126ac93
 				"Disabled"
 			]
 		},
