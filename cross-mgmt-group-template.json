@@ -1,0 +1,111 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "functions": [],
+  "variables": {
+    "mctSubscriptionId": "8f3aef84-3beb-422f-b4f5-f2738fa800db",
+    "fteSubscriptionId": "474c9bf8-e183-4997-ab26-6920b1169f92",
+    "mctResourceGroupName": "mct-rg",
+    "fteResourceGroupName": "fte-rg"
+  },
+  "resources": [
+    {
+      "name": "deploymentToFte",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "scope": "[concat('Microsoft.Management/managementGroups/', 'jangelfdez')]",
+      "location": "westeurope",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "outer"
+        },
+        "mode": "Incremental",
+        "parameters": {
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/managementGroupDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {},
+          "variables": {},
+          "resources": [
+            {
+              "name": "nestedDeployment1",
+              "type": "Microsoft.Resources/deployments",
+              "subscriptionId": "[variables('fteSubscriptionId')]",
+              "apiVersion": "2020-10-01",
+              "location": "westeurope",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/subscriptionDeploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "parameters": {},
+                  "variables": {},
+                  "resources": [
+                    {
+                      "name": "nestedTemplate",
+                      "type": "Microsoft.Resources/deployments",
+                      "apiVersion": "2020-10-01",
+                      "resourceGroup": "test-policy-vnet",
+                      "properties": {
+                        "expressionEvaluationOptions": {
+                          "scope": "inner"
+                        },
+                        "mode": "Incremental",
+                        "parameters": {
+                        },
+                        "template": {
+                          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                          "contentVersion": "1.0.0.0",
+                          "parameters": {},
+                          "variables": {},
+                          "resources": [
+                            {
+                              "name": "test-policy-pe",
+                              "type": "Microsoft.Network/privateEndpoints",
+                              "apiVersion": "2020-08-01",
+                              "location": "westeurope",
+                              "properties": {
+                                "subnet": {
+                                  "id": "/subscriptions/474c9bf8-e183-4997-ab26-6920b1169f92/resourceGroups/test-policy-vnet/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/default"
+                                },
+                                "privateLinkServiceConnections": [
+                                  {
+                                    "name": "test-policy-pe",
+                                    "properties": {
+                                      "privateLinkServiceId": "/subscriptions/8f3aef84-3beb-422f-b4f5-f2738fa800db/resourceGroups/test-policy-resource/providers/Microsoft.Storage/storageAccounts/testpolicyresourcesa",
+                                      "groupIds": [
+                                        "blob"
+                                      ],
+                                      "requestMessage": "autoapprove"
+                                    }
+                                  }
+                                ],
+                                "manualPrivateLinkServiceConnections": []
+                              }
+                            }
+                          ],
+                          "outputs": {}
+                        }
+                      }
+                    }
+                  ],
+                  "outputs": {}
+                }
+              }
+            }
+
+          ],
+          "outputs": {}
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}

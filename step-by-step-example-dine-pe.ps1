@@ -7,7 +7,7 @@ $deploymentPrefix = "yxz"
 $ErrorActionPreference = "Stop"
 $location = "West Europe"
 
-$policyDefinitionFile = ".\dine-pe.json"
+$policyDefinitionFile = ".\dine-privateEndpoint.json"
 $policyName = "Deploy Private Endpoint for supported services"
 $policyDisplayName = "Deploy Private Endpoint for supported services"
 
@@ -57,4 +57,3 @@ New-AzRoleAssignment -ObjectId $assignment.Identity.principalId -RoleDefinitionN
 New-AzResourceGroupDeployment -Name ResourceDeploymentForPolicyTesting -ResourceGroupName $resourcesResourceGroupName -TemplateFile $resourcesTemplate -deploymentPrefix $deploymentPrefix -Verbose
 
 Start-AzPolicyRemediation -Name 'RemediationTask' -PolicyAssignmentId "$($assignment.PolicyAssignmentId)" -ResourceGroupName $resourcesResourceGroupName
-

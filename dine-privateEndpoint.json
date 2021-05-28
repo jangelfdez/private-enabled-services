@@ -12,11 +12,9 @@
 				"existenceScope": "Subscription",
 				"existenceCondition": {
 					"field": "id",
-					"contains": "[concat(parameters('privateEndpointNamePrefix'),'-', split(field('id'), '/')[4],'-', split(field('id'), '/')[8])]"
+					"contains": "[concat(parameters('privateEndpointNamePrefix'),'-', uniqueString(concat(split(field('id'), '/')[4],'-', split(field('id'), '/')[8])))]"
 				},
 				"roleDefinitionIds": [
-					"/providers/Microsoft.Authorization/roleDefinitions/4d97b98b-1d4f-4787-a291-c67834d212e7",
-					"/providers/Microsoft.Authorization/roleDefinitions/6d8ee4ec-f05a-4a1d-8b00-a9b17e38b437",
 					"/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
 				],
 				"deployment": {
@@ -46,10 +44,16 @@
 							},
 							"scriptDeploymentResourceGroupName": {
 								"value": "[parameters('scriptDeploymentResourceGroupName')]"
+							},
+							"subnetManagementGroup": {
+								"value": "[parameters('subnetManagementGroup')]"
+							},
+							"subnetSubscriptionId": {
+								"value": "[parameters('subnetSubscriptionId')]"
 							}
 						},
 						"template": {
-							"$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+							"$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
 							"contentVersion": "1.0.0.0",
 							"parameters": {
 								"resourceId": {
@@ -75,101 +79,26 @@
 								},
 								"scriptDeploymentResourceGroupName": {
 									"type": "string"
+								},
+								"subnetManagementGroup": {
+									"type": "string"
+								},
+								"subnetSubscriptionId": {
+									"value": "string"
 								}
 							},
-							"variables": {},
 							"resources": [
 								{
+									"name": "[concat(uniqueString(concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8])), parameters('subnetManagementGroup'), '-DeploymentScript')]",
 									"type": "Microsoft.Resources/deployments",
-									"name": "[concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8],'DeploymentScript')]",
-									"apiVersion": "2020-06-01",
-									"resourceGroup": "[parameters('scriptDeploymentResourceGroupName')]",
+									"apiVersion": "2020-10-01",
+									"scope": "[concat('Microsoft.Management/managementGroups/', parameters('subnetManagementGroup'))]",
+									"location": "[deployment().location]",
 									"properties": {
-										"mode": "Incremental",
 										"expressionEvaluationOptions": {
 											"scope": "inner"
 										},
-										"parameters": {
-											"resourceId": {
-												"value": "[parameters('resourceId')]"
-											},
-											"scriptDeploymentManagedIdentityId": {
-												"value": "[parameters('scriptDeploymentManagedIdentityId')]"
-											},
-											"scriptDeploymentStorageAccountId": {
-												"value": "[parameters('scriptDeploymentStorageAccountId')]"
-											},
-											"privateEndpointNamePrefix": {
-												"value": "[parameters('privateEndpointNamePrefix')]"
-											}
-										},
-										"template": {
-											"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-											"contentVersion": "1.0.0.0",
-											"parameters": {
-												"resourceId": {
-													"type": "string"
-												},
-												"scriptDeploymentManagedIdentityId": {
-													"type": "string"
-												},
-												"scriptDeploymentStorageAccountId": {
-													"type": "string"
-												},
-												"privateEndpointNamePrefix": {
-													"type": "string"
-												}
-											},
-											"variables": {},
-											"outputs": {
-												"groupId": {
-													"type": "array",
-													"value":  "[reference(concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8],'DeploymentScriptNested')).outputs.groupId]"
-																									}
-											},
-											"resources": [
-												{
-													"type": "Microsoft.Resources/deploymentScripts",
-													"name": "[concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8],'DeploymentScriptNested')]",
-													"apiVersion": "2020-10-01",
-													"location": "westeurope",
-													"kind": "AzurePowerShell",
-													"identity": {
-														"type": "UserAssigned",
-														"userAssignedIdentities": {
-															"[parameters('scriptDeploymentManagedIdentityId')]": {}
-														}
-													},
-													"properties": {
-														"storageAccountSettings": {
-															"storageAccountName": "[split(parameters('scriptDeploymentStorageAccountId'),'/')[8]]",
-															"storageAccountKey": "[listKeys(parameters('scriptDeploymentStorageAccountId'), '2019-06-01').keys[0].value]"
-														},
-														"azPowerShellVersion": "5.6",
-														"arguments": "[concat('-ResourceId ', parameters('resourceId'))]",
-														"scriptContent": "param([string] $ResourceId) \n $apiVersionPath = '/subscriptions/' + $($ResourceId.Split('/')[2]) + '/resourceGroups/' + $($ResourceId.Split('/')[4])+ '/providers/Microsoft.Network/locations/westcentralus/availablePrivateEndpointTypes?api-version=2019-02-01' \n  $apiVersion = ((ConvertFrom-Json (Invoke-AzRestMethod -Path $apiVersionPath -Method GET).content).value  | Where-Object resourcename -like \"$($ResourceId.Split('/')[6])/$($ResourceId.Split('/')[7])\" | Select apiVersion).apiVersion \n $path = $ResourceId + '/privateLinkResources?api-version=' + $apiVersion \n $DeploymentScriptOutputs = @{} \n $DeploymentScriptOutputs['groupId'] = [array](ConvertFrom-Json (Invoke-AzRestMethod -Path $path -Method GET).Content).value.properties.groupId",
-														"timeout": "PT5M",
-														"cleanupPreference": "Always",
-														"retentionInterval": "PT1H"
-													}
-												}
-											]
-										}
-									}
-								},
-								{
-									"type": "Microsoft.Resources/deployments",
-									"name": "[concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8],'NestedDeployment')]",
-									"apiVersion": "2020-06-01",
-									"resourceGroup": "[parameters('privateEndpointResourceGroupName')]",
-									"dependsOn": [
-										"[concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8],'DeploymentScript')]"
-									],
-									"properties": {
 										"mode": "Incremental",
-										"expressionEvaluationOptions": {
-											"scope": "inner"
-										},
 										"parameters": {
 											"resourceId": {
 												"value": "[parameters('resourceId')]"
@@ -177,21 +106,33 @@
 											"privateEndpointSubnetId": {
 												"value": "[parameters('privateEndpointSubnetId')]"
 											},
-											"subnetLocation": {
-												"value": "[reference(first(take(split(parameters('privateEndpointSubnetId'),'/subnets'),1)),'2020-07-01','Full').location]"
+											"scriptDeploymentManagedIdentityId": {
+												"value": "[parameters('scriptDeploymentManagedIdentityId')]"
 											},
-											"groupId": {
-												"value": "[reference(concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8],'DeploymentScript')).outputs.groupId.value]"
-											},
-											"privateEndpointName": {
-												"value": "[concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8])]"
+											"privateEndpointNamePrefix": {
+												"value": "[parameters('privateEndpointNamePrefix')]"
 											},
 											"excludedPrivateEndpointResourceTypes": {
 												"value": "[parameters('excludedPrivateEndpointResourceTypes')]"
+											},
+											"scriptDeploymentStorageAccountId": {
+												"value": "[parameters('scriptDeploymentStorageAccountId')]"
+											},
+											"privateEndpointResourceGroupName": {
+												"value": "[parameters('privateEndpointResourceGroupName')]"
+											},
+											"scriptDeploymentResourceGroupName": {
+												"value": "[parameters('scriptDeploymentResourceGroupName')]"
+											},
+											"subnetSubscriptionId": {
+												"value": "[parameters('subnetSubscriptionId')]"
+											},
+											"location": {
+													"value": "[parameters('location')]"
 											}
 										},
 										"template": {
-											"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+											"$schema": "https://schema.management.azure.com/schemas/2018-05-01/managementGroupDeploymentTemplate.json#",
 											"contentVersion": "1.0.0.0",
 											"parameters": {
 												"resourceId": {
@@ -200,50 +141,276 @@
 												"privateEndpointSubnetId": {
 													"type": "string"
 												},
-												"subnetLocation": {
+												"scriptDeploymentManagedIdentityId": {
 													"type": "string"
 												},
-												"groupId": {
-													"type": "array"
-												},
-												"privateEndpointName": {
+												"privateEndpointNamePrefix": {
 													"type": "string"
 												},
 												"excludedPrivateEndpointResourceTypes": {
 													"type": "array"
+												},
+												"scriptDeploymentStorageAccountId": {
+													"type": "string"
+												},
+												"privateEndpointResourceGroupName": {
+													"type": "string"
+												},
+												"scriptDeploymentResourceGroupName": {
+													"type": "string"
+												},
+												"subnetSubscriptionId": {
+													"type": "string"
+												},
+												"location": {
+													"type": "string"
 												}
 											},
-											"variables": {},
-											"outputs": {},
 											"resources": [
 												{
-													"condition": "[not(contains(parameters('excludedPrivateEndpointResourceTypes'), concat(split(parameters('resourceId'), '/')[6],'/',split(parameters('resourceId'), '/')[7],'/',parameters('groupId')[copyIndex()])))]",
-													"name": "[concat(parameters('privateEndpointName'), parameters('groupId')[copyIndex()])]",
-													"type": "Microsoft.Network/privateEndpoints",
-													"apiVersion": "2020-08-01",
-													"location": "[parameters('subnetLocation')]",
-													"tags": {},
-													"copy": {
-														"name": "pirvateLinkCopy",
-														"count": "[length(parameters('groupId'))]"
-													},
+													"name": "[concat(uniqueString(concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8]), parameters('subnetSubscriptionId')), '-DeploymentScript')]",
+													"type": "Microsoft.Resources/deployments",
+													"subscriptionId": "[parameters('subnetSubscriptionId')]",
+													"apiVersion": "2020-10-01",
+													"location": "[parameters('location')]",
 													"properties": {
-														"subnet": {
-															"id": "[parameters('privateEndpointSubnetId')]"
+														"expressionEvaluationOptions": {
+															"scope": "inner"
 														},
-														"privateLinkServiceConnections": [
-															{
-																"name": "[concat(parameters('privateEndpointName'),parameters('groupId')[copyIndex()])]",
-																"properties": {
-																	"privateLinkServiceId": "[parameters('resourceId')]",
-																	"groupIds": [
-																		"[parameters('groupId')[copyIndex()]]"
-																	],
-																	"requestMessage": "autoapprove"
-																}
+														"mode": "Incremental",
+														"parameters": {
+															"resourceId": {
+																"value": "[parameters('resourceId')]"
+															},
+															"privateEndpointSubnetId": {
+																"value": "[parameters('privateEndpointSubnetId')]"
+															},
+															"scriptDeploymentManagedIdentityId": {
+																"value": "[parameters('scriptDeploymentManagedIdentityId')]"
+															},
+															"privateEndpointNamePrefix": {
+																"value": "[parameters('privateEndpointNamePrefix')]"
+															},
+															"excludedPrivateEndpointResourceTypes": {
+																"value": "[parameters('excludedPrivateEndpointResourceTypes')]"
+															},
+															"scriptDeploymentStorageAccountId": {
+																"value": "[parameters('scriptDeploymentStorageAccountId')]"
+															},
+															"privateEndpointResourceGroupName": {
+																"value": "[parameters('privateEndpointResourceGroupName')]"
+															},
+															"scriptDeploymentResourceGroupName": {
+																"value": "[parameters('scriptDeploymentResourceGroupName')]"
 															}
-														],
-														"manualPrivateLinkServiceConnections": []
+														},
+														"template": {
+															"$schema": "https://schema.management.azure.com/schemas/2019-04-01/subscriptionDeploymentTemplate.json#",
+															"contentVersion": "1.0.0.0",
+															"parameters": {
+																"resourceId": {
+																	"type": "string"
+																},
+																"privateEndpointSubnetId": {
+																	"type": "string"
+																},
+																"scriptDeploymentManagedIdentityId": {
+																	"type": "string"
+																},
+																"privateEndpointNamePrefix": {
+																	"type": "string"
+																},
+																"excludedPrivateEndpointResourceTypes": {
+																	"type": "array"
+																},
+																"scriptDeploymentStorageAccountId": {
+																	"type": "string"
+																},
+																"privateEndpointResourceGroupName": {
+																	"type": "string"
+																},
+																"scriptDeploymentResourceGroupName": {
+																	"type": "string"
+																}
+															},
+															"variables": {},
+															"resources": [
+																{
+																	"type": "Microsoft.Resources/deployments",
+																	"name": "[concat(uniqueString(concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8])),'DeploymentScript')]",
+																	"apiVersion": "2020-06-01",
+																	"resourceGroup": "[parameters('scriptDeploymentResourceGroupName')]",
+																	"properties": {
+																		"mode": "Incremental",
+																		"expressionEvaluationOptions": {
+																			"scope": "inner"
+																		},
+																		"parameters": {
+																			"resourceId": {
+																				"value": "[parameters('resourceId')]"
+																			},
+																			"scriptDeploymentManagedIdentityId": {
+																				"value": "[parameters('scriptDeploymentManagedIdentityId')]"
+																			},
+																			"scriptDeploymentStorageAccountId": {
+																				"value": "[parameters('scriptDeploymentStorageAccountId')]"
+																			},
+																			"privateEndpointNamePrefix": {
+																				"value": "[parameters('privateEndpointNamePrefix')]"
+																			},
+																			"location": {
+																				"value": "[deployment().location]"
+																			}
+																		},
+																		"template": {
+																			"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+																			"contentVersion": "1.0.0.0",
+																			"parameters": {
+																				"resourceId": {
+																					"type": "string"
+																				},
+																				"scriptDeploymentManagedIdentityId": {
+																					"type": "string"
+																				},
+																				"scriptDeploymentStorageAccountId": {
+																					"type": "string"
+																				},
+																				"privateEndpointNamePrefix": {
+																					"type": "string"
+																				},
+																				"location": {
+																					"type": "string"
+																				}
+																			},
+																			"variables": {},
+																			"outputs": {
+																				"groupId": {
+																					"type": "array",
+																					"value": "[reference(concat(uniqueString(concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8])),'DeploymentScriptNested')).outputs.groupId]"
+																				}
+																			},
+																			"resources": [
+																				{
+																					"type": "Microsoft.Resources/deploymentScripts",
+																					"name": "[concat(uniqueString(concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8])),'DeploymentScriptNested')]",
+																					"apiVersion": "2020-10-01",
+																					"location": "[parameters('location')]",
+																					"kind": "AzurePowerShell",
+																					"identity": {
+																						"type": "UserAssigned",
+																						"userAssignedIdentities": {
+																							"[parameters('scriptDeploymentManagedIdentityId')]": {}
+																						}
+																					},
+																					"properties": {
+																						"storageAccountSettings": {
+																							"storageAccountName": "[split(parameters('scriptDeploymentStorageAccountId'),'/')[8]]",
+																							"storageAccountKey": "[listKeys(parameters('scriptDeploymentStorageAccountId'), '2019-06-01').keys[0].value]"
+																						},
+																						"azPowerShellVersion": "5.6",
+																						"arguments": "[concat('-ResourceId ', parameters('resourceId'))]",
+																						"scriptContent": "param([string] $ResourceId) \n $apiVersionPath = '/subscriptions/' + $($ResourceId.Split('/')[2]) + '/resourceGroups/' + $($ResourceId.Split('/')[4])+ '/providers/Microsoft.Network/locations/westcentralus/availablePrivateEndpointTypes?api-version=2019-02-01' \n  $apiVersion = ((ConvertFrom-Json (Invoke-AzRestMethod -Path $apiVersionPath -Method GET).content).value  | Where-Object resourcename -like \"$($ResourceId.Split('/')[6])/$($ResourceId.Split('/')[7])\" | Select apiVersion).apiVersion \n $path = $ResourceId + '/privateLinkResources?api-version=' + $apiVersion \n $DeploymentScriptOutputs = @{} \n $DeploymentScriptOutputs['groupId'] = [array](ConvertFrom-Json (Invoke-AzRestMethod -Path $path -Method GET).Content).value.properties.groupId",
+																						"timeout": "PT5M",
+																						"cleanupPreference": "Always",
+																						"retentionInterval": "PT1H"
+																					}
+																				}
+																			]
+																		}
+																	}
+																},
+																{
+																	"type": "Microsoft.Resources/deployments",
+																	"name": "[concat(uniqueString(concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8])),'NestedDeployment')]",
+																	"apiVersion": "2020-06-01",
+																	"resourceGroup": "[parameters('privateEndpointResourceGroupName')]",
+																	"dependsOn": [
+																		"[concat(uniqueString(concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8])),'DeploymentScript')]"
+																	],
+																	"properties": {
+																		"mode": "Incremental",
+																		"expressionEvaluationOptions": {
+																			"scope": "inner"
+																		},
+																		"parameters": {
+																			"resourceId": {
+																				"value": "[parameters('resourceId')]"
+																			},
+																			"privateEndpointSubnetId": {
+																				"value": "[parameters('privateEndpointSubnetId')]"
+																			},
+																			"groupId": {
+																				"value": "[reference(concat(uniqueString(concat(parameters('privateEndpointNamePrefix'),'-', split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8])),'DeploymentScript')).outputs.groupId.value]"
+																			},
+																			"privateEndpointName": {
+																				"value": "[concat(parameters('privateEndpointNamePrefix'),'-', uniqueString(concat(split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8])))]"
+																			},
+																			"excludedPrivateEndpointResourceTypes": {
+																				"value": "[parameters('excludedPrivateEndpointResourceTypes')]"
+																			},
+																			"subnetLocation": {
+																				"value": "[reference(first(take(split(parameters('privateEndpointSubnetId'),'/subnets'),1)),'2020-07-01','Full').location]"
+																			}
+																		},
+																		"template": {
+																			"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+																			"contentVersion": "1.0.0.0",
+																			"parameters": {
+																				"resourceId": {
+																					"type": "string"
+																				},
+																				"privateEndpointSubnetId": {
+																					"type": "string"
+																				},
+																				"groupId": {
+																					"type": "array"
+																				},
+																				"privateEndpointName": {
+																					"type": "string"
+																				},
+																				"excludedPrivateEndpointResourceTypes": {
+																					"type": "array"
+																				},
+																				"subnetLocation":{
+																					"type": "string"
+																				}
+																			},
+																			"resources": [
+																				{
+																					"condition": "[not(contains(parameters('excludedPrivateEndpointResourceTypes'), concat(split(parameters('resourceId'), '/')[6],'/',split(parameters('resourceId'), '/')[7],'/',parameters('groupId')[copyIndex()])))]",
+																					"name": "[concat(parameters('privateEndpointName'), '-', parameters('groupId')[copyIndex()])]",
+																					"type": "Microsoft.Network/privateEndpoints",
+																					"apiVersion": "2020-08-01",
+																					"location": "[parameters('subnetLocation')]",
+																					"copy": {
+																						"name": "pirvateLinkCopy",
+																						"count": "[length(parameters('groupId'))]"
+																					},
+																					"properties": {
+																						"subnet": {
+																							"id": "[parameters('privateEndpointSubnetId')]"
+																						},
+																						"privateLinkServiceConnections": [
+																							{
+																								"name": "[concat(parameters('privateEndpointName'),parameters('groupId')[copyIndex()])]",
+																								"properties": {
+																									"privateLinkServiceId": "[parameters('resourceId')]",
+																									"groupIds": [
+																										"[parameters('groupId')[copyIndex()]]"
+																									],
+																									"requestMessage": "autoapprove"
+																								}
+																							}
+																						],
+																						"manualPrivateLinkServiceConnections": []
+																					}
+																				}
+																			]
+																		}
+																	}
+																}
+															]
+														}
 													}
 												}
 											]
@@ -264,6 +431,20 @@
 				"displayName": "Private endpoint subnet id where Private Endpoints would be created",
 				"description": "Subnet where all resources associated with the private endpoint would be created. Subnet should have the private endpoint network policies property disabled.",
 				"strongType": "Microsoft.Network/virtualNetworks/subnets"
+			}
+		},
+		"subnetManagementGroup": {
+			"type": "String",
+			"metadata": {
+				"displayName": "",
+				"description": ""
+			}
+		},
+		"subnetSubscriptionId": {
+			"type": "string",
+			"metadata": {
+				"displayName": "",
+				"description": ""
 			}
 		},
 		"privateEndpointNamePrefix": {
@@ -309,7 +490,6 @@
 				"description": "Private endpoints and their associate network interfaces would be deployed inside this specific resource group."
 			}
 		},
-		
 		"scriptDeploymentResourceGroupName": {
 			"type": "string",
 			"metadata": {
