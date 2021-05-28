@@ -1,13 +1,16 @@
 ### Change these properties. They are required
 $subscriptionId = "b53326a7-7584-414c-8f60-8fc2df57cee3"
-$storageAccountName = "pepolicysaxzx"
-$deploymentPrefix = "zwx"
+$storageAccountName = "pepolicysakijm"
+$deploymentPrefix = "zxr"
 
 ### Optional properties
 $ErrorActionPreference = "Stop"
 $location = "West Europe"
 
-$policyDefinitionFile = ".\dine-pe.json"
+$policyDefinitionFile = ".\dine-privateEndpoint.json"
+$policyName = "Deploy Private Endpoint for supported services"
+$policyDisplayName = "Deploy Private Endpoint for supported services"
+
 $resourcesTemplate = ".\private-enabled-services.json"
 
 $networkingResourceGroupName = "pe-net-rg"
@@ -55,4 +58,3 @@ New-AzRoleAssignment -ObjectId $assignment.Identity.principalId -RoleDefinitionN
 New-AzResourceGroupDeployment -Name ResourceDeploymentForPolicyTesting -ResourceGroupName $resourcesResourceGroupName -TemplateFile $resourcesTemplate -deploymentPrefix $deploymentPrefix -Verbose
 
 Start-AzPolicyRemediation -Name 'RemediationTask' -PolicyAssignmentId "$($assignment.PolicyAssignmentId)" -ResourceGroupName $resourcesResourceGroupName
-

@@ -1,0 +1,914 @@
+{
+	"mode": "All",
+	"policyRule": {
+		"if": {
+			"anyOf": [
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.AppConfiguration/configurationStores"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.AppConfiguration/configurationStores/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.AppConfiguration/configurationStores/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Automation/automationAccounts"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Automation/automationAccounts/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Automation/automationAccounts/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Batch/batchAccounts"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Batch/batchAccounts/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Batch/batchAccounts/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Cache/Redis"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Cache/Redis/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Cache/Redis/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Cache/redisEnterprise"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Cache/redisEnterprise/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Cache/redisEnterprise/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.CognitiveServices/accounts"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.CognitiveServices/accounts/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.CognitiveServices/accounts/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Compute/diskAccesses"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Compute/diskAccesses/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Compute/diskAccesses/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.ContainerRegistry/registries"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.ContainerRegistry/registries/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.ContainerRegistry/registries/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.ContainerService/managedClusters"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.ContainerService/managedClusters/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.ContainerService/managedClusters/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.DataFactory/factories"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.DataFactory/factories/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.DataFactory/factories/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.DBforMariaDB/servers"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.DBforMariaDB/servers/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.DBforMariaDB/servers/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.DBforMySQL/servers"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.DBforMySQL/servers/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.DBforMySQL/servers/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.DBforPostgreSQL/servers"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.DBforPostgreSQL/servers/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.DBforPostgreSQL/servers/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Devices/IotHubs"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Devices/IotHubs/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Devices/IotHubs/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Devices/ProvisioningServices"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Devices/ProvisioningServices/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Devices/ProvisioningServices/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.DigitalTwins/digitalTwinsInstances"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.DigitalTwins/digitalTwinsInstances/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.DigitalTwins/digitalTwinsInstances/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.DocumentDB/databaseAccounts"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.DocumentDB/databaseAccounts/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.DocumentDB/databaseAccounts/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.EventGrid/domains"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.EventGrid/domains/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.EventGrid/domains/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.EventGrid/topics"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.EventGrid/topics/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.EventGrid/topics/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.EventHub/namespaces"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.EventHub/namespaces/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.EventHub/namespaces/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.HealthcareApis/services"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.HealthcareApis/services/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.HealthcareApis/services/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Insights/privateLinkScopes"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Insights/privateLinkScopes/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Insights/privateLinkScopes/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.KeyVault/vaults"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.KeyVault/vaults/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.KeyVault/vaults/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.MachineLearningServices/workspaces"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.MachineLearningServices/workspaces/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.MachineLearningServices/workspaces/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Migrate/assessmentProjects"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Migrate/assessmentProjects/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Migrate/assessmentProjects/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Migrate/migrateProjects"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Migrate/migrateProjects/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Migrate/migrateProjects/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Network/applicationgateways"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Network/applicationgateways/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Network/applicationgateways/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Network/privateLinkServices"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Network/privateLinkServices/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Network/privateLinkServices/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.OffAzure/mastersites"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.OffAzure/mastersites/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.OffAzure/mastersites/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.PowerBI/privateLinkServicesForPowerBI"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.PowerBI/privateLinkServicesForPowerBI/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.PowerBI/privateLinkServicesForPowerBI/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Purview/accounts"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Purview/accounts/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Purview/accounts/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.RecoveryServices/vaults"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.RecoveryServices/vaults/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.RecoveryServices/vaults/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Relay/namespaces"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Relay/namespaces/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Relay/namespaces/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Search/searchServices"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Search/searchServices/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Search/searchServices/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.ServiceBus/namespaces"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.ServiceBus/namespaces/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.ServiceBus/namespaces/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.SignalRService/SignalR"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.SignalRService/SignalR/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.SignalRService/SignalR/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Sql/servers"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Sql/servers/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Sql/servers/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Storage/storageAccounts"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Storage/storageAccounts/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Storage/storageAccounts/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.StorageSync/storageSyncServices"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.StorageSync/storageSyncServices/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.StorageSync/storageSyncServices/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Synapse/privateLinkHubs"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Synapse/privateLinkHubs/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Synapse/privateLinkHubs/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Synapse/workspaces"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Synapse/workspaces/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Synapse/workspaces/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.TimeSeriesInsights/environments"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.TimeSeriesInsights/environments/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.TimeSeriesInsights/environments/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Web/hostingEnvironments"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Web/hostingEnvironments/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Web/hostingEnvironments/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Web/sites"
+      },
+      {
+        "anyOf": [
+          {
+            "value": "[split('field(Microsoft.Web/sites/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          },
+          {
+            "value": "[split('field(Microsoft.Web/sites/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+            "notIn": "[parameters('allowedSubscriptions')]"
+          }
+        ]
+      }
+    ]
+  }
+]
+		},
+		"then": {
+			"effect": "[parameters('effect')]"
+		}
+	},
+	"parameters": {
+		"effect":{
+			"type": "String",
+			"metadata": {
+				"displayName": "Select the effect of this policy",
+				"description": "Configures the effect of this policy. Default value is Audit."
+			},
+			"defaultValue": "Audit",
+			"allowedValues": [
+				"Audit",
+				"Deny",
+				"Disabled"
+			]
+		},
+		"allowedSubscriptions": {
+			"type": "Array",
+			"metadata": {
+				"displayName": "Allowed subscriptions",
+				"description": "List of subscriptions that contain resources allowed as a target for a Private Endpoint"
+			}
+		}
+	}
+}
