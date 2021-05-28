@@ -1,51 +1,62 @@
 {
-	"mode": "All",
-	"policyRule": {
-		"if": {
-			"allOf": [
-				{
-					"field": "type",
-					"in": "Microsoft.Network/privateEndpoints"
-				},
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Network/privateEndpoints"
+        },
         {
           "anyOf": [
             {
-              "value": "[split('Microsoft.Network/privateEndpoints/privateLinkServiceConnections[*].privateLinkServiceId', '/')[2]]",
-              "notIn": "[parameters('allowedSubscriptions')]"
+              "count": {
+                "field": "Microsoft.Network/privateEndpoints/privateLinkServiceConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Network/privateEndpoints/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
             },
             {
-              "value": "[split('Microsoft.Network/privateEndpoints/manualPrivateLinkServiceConnections[*].privateLinkServiceId', '/')[2]]",
-              "notIn": "[parameters('allowedSubscriptions')]"
+              "count": {
+                "field": "Microsoft.Network/privateEndpoints/manualPrivateLinkServiceConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Network/privateEndpoints/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
             }
           ]
         }
-			]
-
-		},
-		"then": {
-			"effect": "[parameters('effect')]"
-		}
-	},
-	"parameters": {
-		"effect": {
-			"type": "String",
-			"metadata": {
-				"displayName": "Select the effect of this policy",
-				"description": "Configures the effect of this policy. Default value is Audit."
-			},
-			"defaultValue": "Audit",
-			"allowedValues": [
-				"Audit",
-				"Deny",
-				"Disabled"
-			]
-		},
-		"allowedSubscriptions": {
-			"type": "Array",
-			"metadata": {
-				"displayName": "Allowed subscriptions",
-				"description": "List of subscriptions that contain resources allowed as a target for a Private Endpoint"
-			}
-		}
-	}
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Select the effect of this policy",
+        "description": "Configures the effect of this policy. Default value is Audit."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    },
+    "allowedSubscriptions": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Allowed subscriptions",
+        "description": "List of subscriptions that contain resources allowed as a target for a Private Endpoint"
+      }
+    }
+  }
 }
