@@ -1,18 +1,18 @@
 
 $supportedServices = @(
 	"Microsoft.AppConfiguration/configurationStores",
-	"Microsoft.Automation/automationAccounts",
-	"Microsoft.Batch/batchAccounts",
-	"Microsoft.Cache/Redis",
-	"Microsoft.Cache/redisEnterprise",
+	#	"Microsoft.Automation/automationAccounts", doesn't support [*]
+	# "Microsoft.Batch/batchAccounts", 
+	# "Microsoft.Cache/Redis",
+	# "Microsoft.Cache/redisEnterprise",
 	"Microsoft.CognitiveServices/accounts",
 	"Microsoft.Compute/diskAccesses",
 	"Microsoft.ContainerRegistry/registries",
-	"Microsoft.ContainerService/managedClusters",
-	"Microsoft.DataFactory/factories",
+	# "Microsoft.ContainerService/managedClusters",
+	# "Microsoft.DataFactory/factories",
 	"Microsoft.DBforMariaDB/servers",
-	"Microsoft.DBforMySQL/servers",
-	"Microsoft.DBforPostgreSQL/servers",
+	# "Microsoft.DBforMySQL/servers",
+	# "Microsoft.DBforPostgreSQL/servers",
 	"Microsoft.Devices/IotHubs",
 	"Microsoft.Devices/ProvisioningServices",
 	"Microsoft.DigitalTwins/digitalTwinsInstances",
@@ -25,25 +25,25 @@ $supportedServices = @(
 	"Microsoft.KeyVault/vaults",
 	"Microsoft.MachineLearningServices/workspaces",
 	"Microsoft.Migrate/assessmentProjects",
-	"Microsoft.Migrate/migrateProjects",
+	# "Microsoft.Migrate/migrateProjects",
 	"Microsoft.Network/applicationgateways",
 	"Microsoft.Network/privateLinkServices",
-	"Microsoft.OffAzure/mastersites",
-	"Microsoft.PowerBI/privateLinkServicesForPowerBI",
+	# "Microsoft.OffAzure/mastersites",
+	# "Microsoft.PowerBI/privateLinkServicesForPowerBI",
 	"Microsoft.Purview/accounts",
 	"Microsoft.RecoveryServices/vaults",
-	"Microsoft.Relay/namespaces",
+	# "Microsoft.Relay/namespaces",
 	"Microsoft.Search/searchServices",
-	"Microsoft.ServiceBus/namespaces",
+	# "Microsoft.ServiceBus/namespaces",
 	"Microsoft.SignalRService/SignalR",
 	"Microsoft.Sql/servers",
 	"Microsoft.Storage/storageAccounts",
-	"Microsoft.StorageSync/storageSyncServices",
+	# "Microsoft.StorageSync/storageSyncServices",
 	"Microsoft.Synapse/privateLinkHubs",
-	"Microsoft.Synapse/workspaces",
-	"Microsoft.TimeSeriesInsights/environments",
-	"Microsoft.Web/hostingEnvironments",
-	"Microsoft.Web/sites"
+	"Microsoft.Synapse/workspaces"
+	# "Microsoft.TimeSeriesInsights/environments",
+	# "Microsoft.Web/hostingEnvironments",
+	# "Microsoft.Web/sites"
 )
 
 $anyOf = New-Object -TypeName "System.Collections.ArrayList"
@@ -56,19 +56,19 @@ foreach ($service in $supportedServices) {
 					"field": "type",
 					"equals": "$service"
 				},
-				{
-					"anyOf": [
-						{
-							"value": "[split('field($service/privateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
-							"notIn": "[parameters('allowedSubscriptions')]"
-						},
-						{
-							"value": "[split('field($service/manualPrivateLinkServiceConnections[*].privateLinkServiceId'), '/')[2]]",
-							"notIn": "[parameters('allowedSubscriptions')]"
-						}
-					]
-				}
-			]}
+              {
+                "count": {
+                  "field": "$service/privateEndpointConnections[*]",
+                  "where": {
+                    "value": "[split(current('$service/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                    "notIn": "[parameters('allowedSubscriptions')]"
+                  }
+                },
+                "greater": 0
+              }
+
+			]
+		}
 "@
 	$anyOf.Add($(ConvertFrom-Json -Depth 10 $condition))
 }
