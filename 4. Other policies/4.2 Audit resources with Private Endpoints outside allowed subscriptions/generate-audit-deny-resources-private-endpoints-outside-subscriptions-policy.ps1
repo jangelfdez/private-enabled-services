@@ -1,7 +1,19 @@
+<# 
+Include all resource types that support accesing Private Endpoint details 
+through Azure Policy aliases. You can check which resources support it through the
+following PowerShell command using Az module
+
+  Get-AzPolicyAlias | Select-Object -ExpandProperty Aliases | `
+	Where Name -Like '*privateEndpointConnections`[`*`]' |  Select Name
+
+Services that doesn't support the [*] alias are not included in the policy
+at this time
+#>
+
 
 $supportedServices = @(
 	"Microsoft.AppConfiguration/configurationStores",
-	#	"Microsoft.Automation/automationAccounts", doesn't support [*]
+	#	"Microsoft.Automation/automationAccounts", 
 	# "Microsoft.Batch/batchAccounts", 
 	# "Microsoft.Cache/Redis",
 	# "Microsoft.Cache/redisEnterprise",

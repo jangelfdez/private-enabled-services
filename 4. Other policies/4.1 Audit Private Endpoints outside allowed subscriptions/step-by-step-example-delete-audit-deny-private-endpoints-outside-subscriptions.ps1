@@ -29,8 +29,14 @@ $resourcesResourceGroupName = "pe-res-rg"
 $virtualNetworkName = "pe-vnet"
 $virtualNetworkAddressPrefix = "10.0.0.0/24" 
 
-$policyName = "Deploy Private Endpoint for supported services"
-$policyDisplayName = "Deploy Private Endpoint for supported services"
+$policyName = "Audit Private Endpoints resources outside allowed subscription"
+$policyDisplayName = "Audit Private Endpoints resources outside allowed subscription"
+$policyDefinitionFile = ".\4. Other policies\4.1 Audit Private Endpoints outside allowed subscriptions\audit-deny-private-endpoints-outside-subscriptions.json"
+
+$policyNamePe = "Deploy Private Endpoint for supported services"
+$policyDisplayNamePe = "Deploy Private Endpoint for supported services"
+$policyDefinitionFilePe = ".\2. Deploy Private Endpoint if not exists\Single subscription\dine-privateEndpoint-singleSubscription-policy.json"
+
 
 $resourcesTemplate = ".\common\private-enabled-services.json"
 $policyDefinitionFile = ".\2. Deploy Private Endpoint if not exists\Single subscription\dine-privateEndpoint-singleSubscription-policy.json"
@@ -40,6 +46,10 @@ $managedIdentityName = "pe-identity"
 ### 
 ### Deployment script. Not modify.
 ### 
+
+Remove-AzPolicyAssignment -Name $policyNamePe -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId
+
+Remove-AzPolicyDefinition -Name $policyNamePe -Force
 
 Remove-AzPolicyAssignment -Name $policyName -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId
 
