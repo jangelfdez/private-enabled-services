@@ -346,16 +346,16 @@
 		}
 	},
 	"parameters": {
-		"effect": {
+		"effect":{
 			"type": "String",
 			"metadata": {
 				"displayName": "Select the effect of this policy",
-				"description": "Configures the effect of this policy. Default value is Audit."
+				"description": "Configures the desired effect of this policy. Default value is Audit. It supports also Deny and Disabled values."
 			},
 			"defaultValue": "Audit",
 			"allowedValues": [
 				"Audit",
-				"Deny",
+        "Deny",
 				"Disabled"
 			]
 		}
