@@ -70,6 +70,9 @@ foreach ($service in $supportedServices) {
 			]
 		}
 "@
+
+
+
 	$anyOf.Add($(ConvertFrom-Json -Depth 10 $condition))
 }
 
