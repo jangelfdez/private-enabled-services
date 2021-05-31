@@ -10,7 +10,7 @@ $storageAccountName = "pepolicysapol"
 
 # Add a short prefix to avoid name collisions with other people using the same 
 # script for testing.
-$deploymentPrefix = "yxz"
+$deploymentPrefix = "axy"
 
 ### 
 ### Optional properties. Modify them if needed.
@@ -54,14 +54,14 @@ New-AzVirtualNetwork -ResourceGroupName $networkingResourceGroupName -Name $virt
 $storageAccount = New-AzStorageAccount -ResourceGroupName $scriptDeploymentResourceGroupName -Name $storageAccountName -SkuName Standard_LRS -Location $location -Kind "Storagev2" -AccessTier "Hot"
 
 $identity = New-AzUserAssignedIdentity -ResourceGroupName $scriptDeploymentResourceGroupName -Name $managedIdentityName
-Start-Sleep -Seconds 60
+Start-Sleep -Seconds 120
 New-AzRoleAssignment -ObjectId $identity.PrincipalId -RoleDefinitionName "Reader" -Scope "/subscriptions/$subscriptionId"
 
 $policyDefinition = New-AzPolicyDefinition -Name $policyNamePe -DisplayName $policyDisplayNamePe -Policy $policyDefinitionFilePe
 
 $assignment = New-AzPolicyAssignment -Name $policyNamePe -DisplayName $policyDisplayNamePe `
                        -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId `
-                       -PolicyDefinition $policyDefinitionFilePe `
+                       -PolicyDefinition $policyDefinition `
                        -privateEndpointSubnetId (Get-AzVirtualNetwork -Name $virtualNetworkName -ResourceGroupName $networkingResourceGroupName).Subnets[0].Id `
                        -scriptDeploymentManagedIdentityId $identity.Id `
                        -scriptDeploymentStorageAccountId $storageAccount.Id `

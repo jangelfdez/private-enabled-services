@@ -61,7 +61,7 @@ $policyDefinition = New-AzPolicyDefinition -Name $policyNamePe -DisplayName $pol
 
 $assignment = New-AzPolicyAssignment -Name $policyNamePe -DisplayName $policyDisplayNamePe `
                        -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId `
-                       -PolicyDefinition $policyDefinitionFilePe `
+                       -PolicyDefinition $policyDefinition `
                        -privateEndpointSubnetId (Get-AzVirtualNetwork -Name $virtualNetworkName -ResourceGroupName $networkingResourceGroupName).Subnets[0].Id `
                        -scriptDeploymentManagedIdentityId $identity.Id `
                        -scriptDeploymentStorageAccountId $storageAccount.Id `
