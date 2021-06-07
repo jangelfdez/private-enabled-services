@@ -1,5 +1,5 @@
-$resourcesTest = @("/subscriptions/b53326a7-7584-414c-8f60-8fc2df57cee3/resourceGroups/ja-one-policy/providers/Microsoft.AppConfiguration/configurationStores/pe-testing-app-config-store")
-
+$resourcesTest = @("/subscriptions/b53326a7-7584-414c-8f60-8fc2df57cee3/resourcegroups/pe-res-rg/providers/Microsoft.Batch/batchAccounts/aplbatchaccount")
+$groupId = "batchAccount"
 foreach ($resource in $resourcesTest) {
 
     $resourceId = $resource
@@ -10,10 +10,8 @@ foreach ($resource in $resourcesTest) {
 
     $path = $resourceId + '/privateLinkResources?api-version=' + $apiVersion
     $DeploymentScriptOutputs = @{} 
-    $DeploymentScriptOutputs['zoneNames'] = [array](ConvertFrom-Json (Invoke-AzRestMethod -Path $path -Method GET).Content).value.properties.requiredZoneNames 
+    $DeploymentScriptOutputs['zoneNames'] = [array]((ConvertFrom-Json (Invoke-AzRestMethod -Path $path -Method GET).Content).value | Where-Object name -EQ $groupId | Select -ExpandProperty Properties).requiredZoneNames
 
-    Write-Output $apiVersionPath
-    Write-Output $apiVersion
-    Write-Output $path
-    Write-Output (ConvertFrom-Json (Invoke-AzRestMethod -Path $path -Method GET).Content).value.properties.requiredZoneNames 
+    [array](ConvertFrom-Json (Invoke-AzRestMethod -Path $path -Method GET).Content).value | fl
+    Write-Output $DeploymentScriptOutputs['zoneNames']
 }

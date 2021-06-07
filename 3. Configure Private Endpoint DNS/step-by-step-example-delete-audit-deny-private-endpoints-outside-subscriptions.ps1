@@ -29,9 +29,9 @@ $resourcesResourceGroupName = "pe-res-rg"
 $virtualNetworkName = "pe-vnet"
 $virtualNetworkAddressPrefix = "10.0.0.0/24" 
 
-$policyName = "Audit resource with Private Endpoint not allowed subscription"
-$policyDisplayName = "Audit resource with Private Endpoint not allowed subscription"
-$policyDefinitionFile = ".\4. Other policies\4.2 Audit resources with Private Endpoints outside allowed subscriptions\audit-deny-resources-private-endpoints-outside-subscriptions.json"
+$policyName = "Audit Private Endpoints resources outside allowed subscription"
+$policyDisplayName = "Audit Private Endpoints resources outside allowed subscription"
+$policyDefinitionFile = ".\4. Other policies\4.1 Audit Private Endpoints outside allowed subscriptions\audit-deny-private-endpoints-outside-subscriptions.json"
 
 $policyNamePe = "Deploy Private Endpoint for supported services"
 $policyDisplayNamePe = "Deploy Private Endpoint for supported services"
@@ -47,27 +47,21 @@ $managedIdentityName = "pe-identity"
 ### Deployment script. Not modify.
 ### 
 
-
 $identity = Get-AzUserAssignedIdentity -ResourceGroupName $scriptDeploymentResourceGroupName -Name $managedIdentityName
 Remove-AzRoleAssignment -ObjectId $identity.PrincipalId -Scope "/subscriptions/$subscriptionId" -RoleDefinitionName "Reader"
 
 $assignment = Get-AzPolicyAssignment -Name $policyNamePe -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId 
-
 Remove-AzRoleAssignment -ObjectId $assignment.Identity.principalId -Scope "/subscriptions/$subscriptionId" -RoleDefinitionName "Contributor"
 
-Remove-AzRoleAssignment -ObjectId $identity.PrincipalId -Scope "/subscriptions/$subscriptionId" -RoleDefinitionName "Reader"
-
 Remove-AzPolicyAssignment -Name $policyNamePe -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId
-
 Remove-AzPolicyDefinition -Name $policyNamePe -Force
 
 Remove-AzPolicyAssignment -Name $policyName -Scope $(Get-AzResourceGroup -Name $networkingResourceGroupName).ResourceId
-
 Remove-AzPolicyDefinition -Name $policyName -Force
 
-
-
 Remove-AzUserAssignedIdentity -ResourceGroupName $scriptDeploymentResourceGroupName -Name $managedIdentityName -Force
+
+Remove-AzPrivateDnsZone -ResourceGroupName $networkingResourceGroupName -Name "privatelink.azconfig.io"
 
 Remove-AzStorageAccount -ResourceGroupName $scriptDeploymentResourceGroupName -Name $storageAccountName -Force
 

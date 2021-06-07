@@ -12,7 +12,7 @@
 				"existenceScope": "Subscription",
 				"existenceCondition": {
 					"field": "id",
-          "contains": "[concat(parameters('privateEndpointNamePrefix'),'-', uniqueString(concat(split(field('id'), '/')[4],'-', split(field('id'), '/')[8])))]"
+          "contains": "[concat(parameters('privateEndpointNamePrefix'),'-', uniqueString(split(field('id'), '/')[4],'-', split(field('id'), '/')[8]))]"
 				},
 				"roleDefinitionIds": [
 					"/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"

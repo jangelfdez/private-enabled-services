@@ -10,7 +10,7 @@ $storageAccountName = "pepolicysapol"
 
 # Add a short prefix to avoid name collisions with other people using the same 
 # script for testing.
-$deploymentPrefix = "yxz"
+$deploymentPrefix = "yiu"
 
 ### 
 ### Optional properties. Modify them if needed.

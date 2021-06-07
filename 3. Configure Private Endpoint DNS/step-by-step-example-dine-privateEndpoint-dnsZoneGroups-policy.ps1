@@ -6,11 +6,11 @@
 # be deployed to test the behavior of the policy.
 $subscriptionId = "b53326a7-7584-414c-8f60-8fc2df57cee3"
 
-$storageAccountName = "pepolicysapol"
-
 # Add a short prefix to avoid name collisions with other people using the same 
 # script for testing.
-$deploymentPrefix = "tuy"
+$deploymentPrefix = "apl"
+
+$storageAccountName = "pepolicysapol$deploymentPrefix"
 
 ### 
 ### Optional properties. Modify them if needed.
@@ -29,11 +29,16 @@ $resourcesResourceGroupName = "pe-res-rg"
 $virtualNetworkName = "pe-vnet"
 $virtualNetworkAddressPrefix = "10.0.0.0/24" 
 
-$policyName = "Deploy Private Endpoint for supported services"
-$policyDisplayName = "Deploy Private Endpoint for supported services"
+$policyName = "Deploy Private Endpoint DNS configuration"
+$policyDisplayName = "Deploy Private Endpoint DNS configuration"
+$policyDefinitionFile = ".\3. Configure Private Endpoint DNS\dine-privateEndpoint-dnsZoneGroups.json"
+
+$policyNamePe = "Deploy Private Endpoint for supported services"
+$policyDisplayNamePe = "Deploy Private Endpoint for supported services"
+$policyDefinitionFilePe = ".\2. Deploy Private Endpoint if not exists\Single subscription\dine-privateEndpoint-singleSubscription-policy.json"
 
 $resourcesTemplate = ".\common\private-enabled-services.json"
-$policyDefinitionFile = ".\2. Deploy Private Endpoint if not exists\Single subscription\dine-privateEndpoint-singleSubscription-policy.json"
+$privateDnsZonesTemplate = ".\3. Configure Private Endpoint DNS\private-dns-zones-private-enabled-services.json"
 
 $managedIdentityName = "pe-identity"
 
@@ -49,13 +54,14 @@ New-AzVirtualNetwork -ResourceGroupName $networkingResourceGroupName -Name $virt
 
 $storageAccount = New-AzStorageAccount -ResourceGroupName $scriptDeploymentResourceGroupName -Name $storageAccountName -SkuName Standard_LRS -Location $location -Kind "Storagev2" -AccessTier "Hot"
 
+
 $identity = New-AzUserAssignedIdentity -ResourceGroupName $scriptDeploymentResourceGroupName -Name $managedIdentityName
-Start-Sleep -Seconds 60
+Start-Sleep -Seconds 120
 New-AzRoleAssignment -ObjectId $identity.PrincipalId -RoleDefinitionName "Reader" -Scope "/subscriptions/$subscriptionId"
 
-$policyDefinition = New-AzPolicyDefinition -Name $policyName -DisplayName $policyDisplayName -Policy $policyDefinitionFile
+$policyDefinition = New-AzPolicyDefinition -Name $policyNamePe -DisplayName $policyDisplayNamePe -Policy $policyDefinitionFilePe
 
-$assignment = New-AzPolicyAssignment -Name $policyName -DisplayName $policyDisplayName `
+$assignment = New-AzPolicyAssignment -Name $policyNamePe -DisplayName $policyDisplayNamePe `
                        -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId `
                        -PolicyDefinition $policyDefinition `
                        -privateEndpointSubnetId (Get-AzVirtualNetwork -Name $virtualNetworkName -ResourceGroupName $networkingResourceGroupName).Subnets[0].Id `
@@ -68,6 +74,20 @@ $assignment = New-AzPolicyAssignment -Name $policyName -DisplayName $policyDispl
 Start-Sleep -Seconds 120
 New-AzRoleAssignment -ObjectId $assignment.Identity.principalId -RoleDefinitionName "Contributor" -Scope "/subscriptions/$subscriptionId"
 
-New-AzResourceGroupDeployment -Name ResourceDeploymentForPolicyTesting -ResourceGroupName $resourcesResourceGroupName -TemplateFile $resourcesTemplate -deploymentPrefix $deploymentPrefix -Verbose
+$policyDefinition = New-AzPolicyDefinition -Name $policyName -DisplayName $policyDisplayName -Policy $policyDefinitionFile
 
-Start-AzPolicyRemediation -Name 'RemediationTask' -PolicyAssignmentId "$($assignment.PolicyAssignmentId)" -ResourceGroupName $resourcesResourceGroupName
+$assignment = New-AzPolicyAssignment -Name $policyName -DisplayName $policyDisplayName `
+                      -Scope $(Get-AzResourceGroup -Name $networkingResourceGroupName).ResourceId `
+                      -PolicyDefinition $policyDefinition `
+                      -privateDnsZoneSubscriptionId $subscriptionId `
+                      -privateDnsZoneResourceGroupName $networkingResourceGroupName `
+                      -privateEndpointResourceGroupName $networkingResourceGroupName `
+                      -scriptDeploymentManagedIdentityId $identity.Id `
+                      -scriptDeploymentStorageAccountId $storageAccount.Id `
+                      -scriptDeploymentResourceGroupName $scriptDeploymentResourceGroupName `
+                      -AssignIdentity -Location $location
+Start-Sleep -Seconds 120
+New-AzRoleAssignment -ObjectId $assignment.Identity.principalId -RoleDefinitionName "Contributor" -Scope "/subscriptions/$subscriptionId"
+
+New-AzResourceGroupDeployment -Name ResourceDeploymentForPolicyTesting -ResourceGroupName $networkingResourceGroupName -TemplateFile $privateDnsZonesTemplate -Verbose
+New-AzResourceGroupDeployment -Name ResourceDeploymentForPolicyTesting -ResourceGroupName $resourcesResourceGroupName -TemplateFile $resourcesTemplate -deploymentPrefix $deploymentPrefix -Verbose

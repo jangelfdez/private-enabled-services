@@ -47,17 +47,17 @@ $managedIdentityName = "pe-identity"
 ### Deployment script. Not modify.
 ### 
 
-Remove-AzPolicyAssignment -Name $policyNamePe -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId
+$identity = Get-AzUserAssignedIdentity -ResourceGroupName $scriptDeploymentResourceGroupName -Name $managedIdentityName
+Remove-AzRoleAssignment -ObjectId $identity.PrincipalId -Scope "/subscriptions/$subscriptionId" -RoleDefinitionName "Reader"
 
-Remove-AzPolicyDefinition -Name $policyNamePe -Force
-
-Remove-AzPolicyAssignment -Name $policyName -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId
-
-Remove-AzPolicyDefinition -Name $policyName -Force
-
+$assignment = Get-AzPolicyAssignment -Name $policyNamePe -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId 
 Remove-AzRoleAssignment -ObjectId $assignment.Identity.principalId -Scope "/subscriptions/$subscriptionId" -RoleDefinitionName "Contributor"
 
-Remove-AzRoleAssignment -ObjectId $identity.PrincipalId -Scope "/subscriptions/$subscriptionId" -RoleDefinitionName "Reader"
+Remove-AzPolicyAssignment -Name $policyNamePe -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId
+Remove-AzPolicyDefinition -Name $policyNamePe -Force
+
+Remove-AzPolicyAssignment -Name $policyName -Scope $(Get-AzResourceGroup -Name $networkingResourceGroupName).ResourceId
+Remove-AzPolicyDefinition -Name $policyName -Force
 
 Remove-AzUserAssignedIdentity -ResourceGroupName $scriptDeploymentResourceGroupName -Name $managedIdentityName -Force
 

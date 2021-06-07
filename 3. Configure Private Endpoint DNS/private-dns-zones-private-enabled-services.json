@@ -1,0 +1,230 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": 
+    [
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.azure-automation.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.database.windows.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.sql.azuresynapse.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.blob.core.windows.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.table.core.windows.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.queue.core.windows.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.file.core.windows.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.web.core.windows.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.dfs.core.windows.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.documents.azure.com",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.mongo.cosmos.azure.com",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.cassandra.cosmos.azure.com",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.gremlin.cosmos.azure.com",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.table.cosmos.azure.com",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.postgres.database.azure.com",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.mysql.database.azure.com",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.mariadb.database.azure.com",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.vaultcore.azure.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.search.windows.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.azurecr.io",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.azconfig.io",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.servicebus.windows.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.azure-devices.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.eventgrid.azure.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.azurewebsites.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.api.azureml.ms",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.notebooks.azure.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.service.signalr.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.monitor.azure.com",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.oms.opinsights.azure.com",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.ods.opinsights.azure.com",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.agentsvc.azure-automation.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.cognitiveservices.azure.com",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.afs.azure.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.datafactory.azure.net",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.adf.azure.com",
+    "location": "global"
+  },
+  {
+    "type": "Microsoft.Network/privateDnsZones",
+    "apiVersion": "2020-06-01",
+    "name": "privatelink.redis.cache.windows.net",
+    "location": "global"
+  }
+]
+  
+}

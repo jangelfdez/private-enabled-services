@@ -10,7 +10,7 @@ $storageAccountName = "pepolicysapol"
 
 # Add a short prefix to avoid name collisions with other people using the same 
 # script for testing.
-$deploymentPrefix = "axy"
+$deploymentPrefix = "apl"
 
 ### 
 ### Optional properties. Modify them if needed.
@@ -75,12 +75,9 @@ New-AzRoleAssignment -ObjectId $assignment.Identity.principalId -RoleDefinitionN
 $policyDefinition = New-AzPolicyDefinition -Name $policyName -DisplayName $policyDisplayName -Policy $policyDefinitionFile
 
 $assignment = New-AzPolicyAssignment -Name $policyName -DisplayName $policyDisplayName `
-                      -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId `
+                      -Scope $(Get-AzResourceGroup -Name $networkingResourceGroupName).ResourceId `
                       -PolicyDefinition $policyDefinition `
                       -allowedSubscriptions @($subscriptionId) `
                       -Location $location
 
-
 New-AzResourceGroupDeployment -Name ResourceDeploymentForPolicyTesting -ResourceGroupName $resourcesResourceGroupName -TemplateFile $resourcesTemplate -deploymentPrefix $deploymentPrefix -Verbose
-
-Start-AzPolicyRemediation -Name 'RemediationTask' -PolicyAssignmentId "$($assignment.PolicyAssignmentId)" -ResourceGroupName $resourcesResourceGroupName
