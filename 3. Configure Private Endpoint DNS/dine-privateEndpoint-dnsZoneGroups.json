@@ -1,75 +1,24 @@
 {
-	"parameters": {
-		"deploymentPrefix": {
-			"type": "String",
-			"metadata": {
-				"displayName": "Private Endpoint Name Prefix",
-				"description": "A prefix used to configure the private endpoint name. Suffix is automatically generated as a combination of the resource group and subnet name"
-			},
-			"defaultValue": "pe"
-		},
-		"privateDnsZoneSubscriptionId": {
-			"type": "String",
-			"metadata": {
-				"displayName": "Subscription where the Azure Private DNS zones for Private Endpoint would be available",
-				"description": "Subscription where the Azure Private DNS zones for Private Endpoint would be available"
-			}
-		},
-		"privateDnsZoneResourceGroupName": {
-			"type": "String",
-			"metadata": {
-				"displayName": "Resource group where Azure Private DNS zones are deployed",
-				"description": "Private endpoints and their associate network interfaces would be deployed inside this specific resource group."
-			}
-		},
-		"privateEndpointResourceGroupName": {
-			"type": "String",
-			"metadata": {
-				"displayName": "Resource group where Azure Private Endpoints are deployed",
-				"description": "Private endpoints and their associate network interfaces would be deployed inside this specific resource group."
-			}
-		},
-		"scriptDeploymentManagedIdentityId": {
-			"type": "String",
-			"metadata": {
-				"displayName": "Managed Identity resource id required to deploy your private endpoints",
-				"description": "Your managed identity is used to query the required information in your subscription to automatically configure your private endpoints associated with the resources defiined by parameter privateLinkAvailableResourceTypes. It should be defined in the following format /subscriptions/[Subscription Id]/resourceGroups/[Resource Group]/providers/Microsoft.ManagedIdentity/userAssignedIdentities/[UserManagedIdentityName]"
-			}
-		},
-		"scriptDeploymentStorageAccountId": {
-			"type": "String",
-			"metadata": {
-				"displayName": "Storage account where required scripts by this policy would be stored.",
-				"description": "This policy uses Azure Resource Manager Deployment Scripts to automatically configure your private endpoints associated with the resources defined by parameter  privateLinkAvailableResourceTypes. Deployment Scripts requires an storage account to store its temporal data.",
-				"strongType": "Microsoft.Storage/storageaccounts"
-			}
-		},
-		"scriptDeploymentResourceGroupName": {
-			"type": "String",
-			"metadata": {
-				"displayName": "Resource group where temporary resources would be created",
-				"description": "Deployment Scripts associated resources would be deployed inside this specific resource group."
-			}
-		}
-	},
+	"mode": "All",
 	"policyRule": {
 		"if": {
-			"field": "type",
-			"equals": "Microsoft.Network/privateEndpoints"
+			"allOf": [
+				{
+					"field": "type",
+					"equals": "Microsoft.Network/privateEndpoints"
+				},
+				{
+          "count": {
+            "field": "Microsoft.Network/privateEndpoints/customDnsConfigs[*]"
+          },
+          "greaterOrEquals": 1
+        }
+			]
 		},
 		"then": {
 			"effect": "DeployIfNotExists",
 			"details": {
-				"type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
-				"existenceScope": "Subscription",
-				"existenceCondition": {
-					"allOf": [
-						{
-							"field": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups/privateDnsZoneConfigs[*].privateDnsZoneId",
-							"contains": "[concat('/subscriptions/', parameters('privateDnsZoneSubscriptionId'), '/resourceGroups/', parameters('privateDnsZoneResourceGroupName'), '/providers/Microsoft.Network/privateDnsZones/')]"
-						}
-					]
-				},
+				"type": "Microsoft.Network/privateEndpoints",
 				"roleDefinitionIds": [
 					"/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
 				],
@@ -310,6 +259,59 @@
 						}
 					}
 				}
+			}
+		}
+	},
+	"parameters": {
+		"deploymentPrefix": {
+			"type": "String",
+			"metadata": {
+				"displayName": "Private Endpoint Name Prefix",
+				"description": "A prefix used to configure the private endpoint name. Suffix is automatically generated as a combination of the resource group and subnet name"
+			},
+			"defaultValue": "pe"
+		},
+		"privateDnsZoneSubscriptionId": {
+			"type": "String",
+			"metadata": {
+				"displayName": "Subscription where the Azure Private DNS zones for Private Endpoint would be available",
+				"description": "Subscription where the Azure Private DNS zones for Private Endpoint would be available"
+			}
+		},
+		"privateDnsZoneResourceGroupName": {
+			"type": "String",
+			"metadata": {
+				"displayName": "Resource group where Azure Private DNS zones are deployed",
+				"description": "Private endpoints and their associate network interfaces would be deployed inside this specific resource group."
+			}
+		},
+		"privateEndpointResourceGroupName": {
+			"type": "String",
+			"metadata": {
+				"displayName": "Resource group where Azure Private Endpoints are deployed",
+				"description": "Private endpoints and their associate network interfaces would be deployed inside this specific resource group."
+			}
+		},
+		"scriptDeploymentManagedIdentityId": {
+			"type": "String",
+			"metadata": {
+				"displayName": "Managed Identity resource id required to deploy your private endpoints",
+				"description": "Your managed identity is used to query the required information in your subscription to automatically configure your private endpoints associated with the resources defiined by parameter privateLinkAvailableResourceTypes. It should be defined in the following format /subscriptions/[Subscription Id]/resourceGroups/[Resource Group]/providers/Microsoft.ManagedIdentity/userAssignedIdentities/[UserManagedIdentityName]"
+			}
+		},
+		"scriptDeploymentStorageAccountId": {
+			"type": "String",
+			"metadata": {
+				"displayName": "Storage account where required scripts by this policy would be stored.",
+				"description": "This policy uses Azure Resource Manager Deployment Scripts to automatically configure your private endpoints associated with the resources defined by parameter  privateLinkAvailableResourceTypes. Deployment Scripts requires an storage account to store its temporal data.",
+				"strongType": "Microsoft.Storage/storageaccounts"
+			}
+		},
+		"scriptDeploymentResourceGroupName": {
+			"type": "String",
+			"metadata": {
+				"displayName": "Resource group where temporary resources would be created",
+				"description": "Deployment Scripts associated resources would be deployed inside this specific resource group."
 			}
 		}
 	}

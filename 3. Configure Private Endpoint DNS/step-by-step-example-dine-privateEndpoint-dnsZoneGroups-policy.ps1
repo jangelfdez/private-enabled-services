@@ -8,7 +8,7 @@ $subscriptionId = "b53326a7-7584-414c-8f60-8fc2df57cee3"
 
 # Add a short prefix to avoid name collisions with other people using the same 
 # script for testing.
-$deploymentPrefix = "apl"
+$deploymentPrefix = "xty"
 
 $storageAccountName = "pepolicysapol$deploymentPrefix"
 

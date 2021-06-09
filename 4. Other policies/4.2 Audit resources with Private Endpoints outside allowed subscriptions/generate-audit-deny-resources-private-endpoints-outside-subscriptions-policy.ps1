@@ -13,7 +13,7 @@ at this time
 
 $supportedServices = @(
 	"Microsoft.AppConfiguration/configurationStores",
-	#	"Microsoft.Automation/automationAccounts", 
+	# "Microsoft.Automation/automationAccounts", 
 	# "Microsoft.Batch/batchAccounts", 
 	# "Microsoft.Cache/Redis",
 	# "Microsoft.Cache/redisEnterprise",
