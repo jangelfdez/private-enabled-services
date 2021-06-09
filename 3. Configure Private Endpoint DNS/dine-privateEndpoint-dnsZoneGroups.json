@@ -282,7 +282,7 @@
 			"type": "String",
 			"metadata": {
 				"displayName": "Resource group where Azure Private DNS zones are deployed",
-				"description": "Private endpoints and their associate network interfaces would be deployed inside this specific resource group."
+				"description": "Private DNS Zones would be deployed inside this specific resource group."
 			}
 		},
 		"privateEndpointResourceGroupName": {
