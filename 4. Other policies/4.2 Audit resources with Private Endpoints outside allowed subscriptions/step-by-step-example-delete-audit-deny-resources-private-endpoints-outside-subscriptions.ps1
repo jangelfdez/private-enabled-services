@@ -10,7 +10,7 @@ $storageAccountName = "pepolicysaapal"
 
 # Add a short prefix to avoid name collisions with other people using the same 
 # script for testing.
-$deploymentPrefix = "yxz"
+$deploymentPrefix = "zok"
 
 ### 
 ### Optional properties. Modify them if needed.
@@ -55,8 +55,6 @@ $assignment = Get-AzPolicyAssignment -Name $policyNamePe -Scope $(Get-AzResource
 
 Remove-AzRoleAssignment -ObjectId $assignment.Identity.principalId -Scope "/subscriptions/$subscriptionId" -RoleDefinitionName "Contributor"
 
-Remove-AzRoleAssignment -ObjectId $identity.PrincipalId -Scope "/subscriptions/$subscriptionId" -RoleDefinitionName "Reader"
-
 Remove-AzPolicyAssignment -Name $policyNamePe -Scope $(Get-AzResourceGroup -Name $resourcesResourceGroupName).ResourceId
 
 Remove-AzPolicyDefinition -Name $policyNamePe -Force
@@ -65,10 +63,7 @@ Remove-AzPolicyAssignment -Name $policyName -Scope $(Get-AzResourceGroup -Name $
 
 Remove-AzPolicyDefinition -Name $policyName -Force
 
-
-
 Remove-AzUserAssignedIdentity -ResourceGroupName $scriptDeploymentResourceGroupName -Name $managedIdentityName -Force
-
 Remove-AzStorageAccount -ResourceGroupName $scriptDeploymentResourceGroupName -Name $storageAccountName -Force
 
 Remove-AzResourceGroup -Name $networkingResourceGroupName  -Force

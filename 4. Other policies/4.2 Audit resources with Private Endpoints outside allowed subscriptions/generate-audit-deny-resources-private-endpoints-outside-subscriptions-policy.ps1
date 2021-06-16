@@ -63,25 +63,41 @@ $anyOf = New-Object -TypeName "System.Collections.ArrayList"
 foreach ($service in $supportedServices) {
 
 	$condition = @"
-		{	"allOf": [
+		{	
+			"allOf": [
 				{
-					"field": "type",
-					"equals": "$service"
-				},
-              {
-                "count": {
-                  "field": "$service/privateEndpointConnections[*]",
-                  "where": {
-                    "value": "[split(current('$service/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-                    "notIn": "[parameters('allowedSubscriptions')]"
-                  }
-                },
-                "greater": 0
-              }
-
+        	"field": "type",
+        	"equals": "$service"
+      	},	
+				{
+					"count": {
+						"field": "$service/privateEndpointConnections[*]",
+						"where": {
+							"value": "[split(current('$service/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+							"notIn": "[parameters('allowedSubscriptions')]"
+						}
+					},
+					"greater": 0
+				}
 			]
 		}
 "@
+	+
+
+	#@"
+	#		{	"allOf": [
+	#				{
+	#					"field": "type",
+	#					"equals": "$service"
+	#				},
+	#				{
+	#					"value": "[split(field('$service/privateEndpointConnections/privateEndpoint.id'), '/')[2]]",
+	#					"notIn": "[parameters('allowedSubscriptions')]"
+	#			
+	#				}
+	#			]
+	#		}
+	#"@
 
 
 

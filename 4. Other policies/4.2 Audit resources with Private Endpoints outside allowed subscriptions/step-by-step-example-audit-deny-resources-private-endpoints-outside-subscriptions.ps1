@@ -10,7 +10,7 @@ $storageAccountName = "pepolicysapol"
 
 # Add a short prefix to avoid name collisions with other people using the same 
 # script for testing.
-$deploymentPrefix = "yiu"
+$deploymentPrefix = "wxz"
 
 ### 
 ### Optional properties. Modify them if needed.
@@ -30,7 +30,7 @@ $virtualNetworkName = "pe-vnet"
 $virtualNetworkAddressPrefix = "10.0.0.0/24" 
 
 $policyName = "Audit resource with Private Endpoint not allowed subscription"
-$policyDisplayName = "Audit resource with Private Endpoint not allowed subscription"
+$policyDisplayName = "Audit resource with Private Endpoint not allowed subscription - 2"
 $policyDefinitionFile = ".\4. Other policies\4.2 Audit resources with Private Endpoints outside allowed subscriptions\audit-deny-resources-private-endpoints-outside-subscriptions.json"
 
 $policyNamePe = "Deploy Private Endpoint for supported services"
