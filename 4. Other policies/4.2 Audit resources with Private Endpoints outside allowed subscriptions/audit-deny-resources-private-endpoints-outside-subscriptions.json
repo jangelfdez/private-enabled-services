@@ -1,520 +1,520 @@
 {
-	"mode": "All",
-	"policyRule": {
-		"if": {
-			"anyOf": [
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.AppConfiguration/configurationStores"
-      },
-      {
-        "count": {
-          "field": "Microsoft.AppConfiguration/configurationStores/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.AppConfiguration/configurationStores/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "anyOf": [
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.AppConfiguration/configurationStores"
+            },
+            {
+              "count": {
+                "field": "Microsoft.AppConfiguration/configurationStores/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.AppConfiguration/configurationStores/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
         },
-        "greater": 0
-      }
-    ]
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.CognitiveServices/accounts"
+            },
+            {
+              "count": {
+                "field": "Microsoft.CognitiveServices/accounts/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.CognitiveServices/accounts/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Compute/diskAccesses"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Compute/diskAccesses/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Compute/diskAccesses/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.ContainerRegistry/registries"
+            },
+            {
+              "count": {
+                "field": "Microsoft.ContainerRegistry/registries/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.ContainerRegistry/registries/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.DBforMariaDB/servers"
+            },
+            {
+              "count": {
+                "field": "Microsoft.DBforMariaDB/servers/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.DBforMariaDB/servers/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Devices/IotHubs"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Devices/IotHubs/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Devices/IotHubs/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Devices/ProvisioningServices"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Devices/ProvisioningServices/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Devices/ProvisioningServices/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.DigitalTwins/digitalTwinsInstances"
+            },
+            {
+              "count": {
+                "field": "Microsoft.DigitalTwins/digitalTwinsInstances/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.DigitalTwins/digitalTwinsInstances/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.DocumentDB/databaseAccounts"
+            },
+            {
+              "count": {
+                "field": "Microsoft.DocumentDB/databaseAccounts/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.DocumentDB/databaseAccounts/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.EventGrid/domains"
+            },
+            {
+              "count": {
+                "field": "Microsoft.EventGrid/domains/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.EventGrid/domains/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.EventGrid/topics"
+            },
+            {
+              "count": {
+                "field": "Microsoft.EventGrid/topics/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.EventGrid/topics/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.EventHub/namespaces"
+            },
+            {
+              "count": {
+                "field": "Microsoft.EventHub/namespaces/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.EventHub/namespaces/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.HealthcareApis/services"
+            },
+            {
+              "count": {
+                "field": "Microsoft.HealthcareApis/services/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.HealthcareApis/services/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Insights/privateLinkScopes"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Insights/privateLinkScopes/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Insights/privateLinkScopes/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.KeyVault/vaults"
+            },
+            {
+              "count": {
+                "field": "Microsoft.KeyVault/vaults/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.KeyVault/vaults/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.MachineLearningServices/workspaces"
+            },
+            {
+              "count": {
+                "field": "Microsoft.MachineLearningServices/workspaces/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.MachineLearningServices/workspaces/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Migrate/assessmentProjects"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Migrate/assessmentProjects/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Migrate/assessmentProjects/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Network/applicationgateways"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Network/applicationgateways/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Network/applicationgateways/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Network/privateLinkServices"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Network/privateLinkServices/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Network/privateLinkServices/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Purview/accounts"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Purview/accounts/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Purview/accounts/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.RecoveryServices/vaults"
+            },
+            {
+              "count": {
+                "field": "Microsoft.RecoveryServices/vaults/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.RecoveryServices/vaults/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Search/searchServices"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Search/searchServices/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Search/searchServices/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.SignalRService/SignalR"
+            },
+            {
+              "count": {
+                "field": "Microsoft.SignalRService/SignalR/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.SignalRService/SignalR/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Sql/servers"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Sql/servers/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Sql/servers/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Storage/storageAccounts"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Storage/storageAccounts/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Storage/storageAccounts/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Synapse/privateLinkHubs"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Synapse/privateLinkHubs/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Synapse/privateLinkHubs/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Synapse/workspaces"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Synapse/workspaces/privateEndpointConnections[*]",
+                "where": {
+                  "value": "[split(current('Microsoft.Synapse/workspaces/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
+                  "notIn": "[parameters('allowedSubscriptions')]"
+                }
+              },
+              "greater": 0
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
   },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.CognitiveServices/accounts"
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Select the effect of this policy",
+        "description": "Configures the effect of this policy. Default value is Audit."
       },
-      {
-        "count": {
-          "field": "Microsoft.CognitiveServices/accounts/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.CognitiveServices/accounts/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
+      "defaultValue": "Audit",
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ]
+    },
+    "allowedSubscriptions": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Allowed subscriptions",
+        "description": "List of subscriptions that contain resources allowed as a target for a Private Endpoint"
       }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Compute/diskAccesses"
-      },
-      {
-        "count": {
-          "field": "Microsoft.Compute/diskAccesses/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.Compute/diskAccesses/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.ContainerRegistry/registries"
-      },
-      {
-        "count": {
-          "field": "Microsoft.ContainerRegistry/registries/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.ContainerRegistry/registries/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.DBforMariaDB/servers"
-      },
-      {
-        "count": {
-          "field": "Microsoft.DBforMariaDB/servers/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.DBforMariaDB/servers/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Devices/IotHubs"
-      },
-      {
-        "count": {
-          "field": "Microsoft.Devices/IotHubs/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.Devices/IotHubs/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Devices/ProvisioningServices"
-      },
-      {
-        "count": {
-          "field": "Microsoft.Devices/ProvisioningServices/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.Devices/ProvisioningServices/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.DigitalTwins/digitalTwinsInstances"
-      },
-      {
-        "count": {
-          "field": "Microsoft.DigitalTwins/digitalTwinsInstances/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.DigitalTwins/digitalTwinsInstances/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.DocumentDB/databaseAccounts"
-      },
-      {
-        "count": {
-          "field": "Microsoft.DocumentDB/databaseAccounts/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.DocumentDB/databaseAccounts/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.EventGrid/domains"
-      },
-      {
-        "count": {
-          "field": "Microsoft.EventGrid/domains/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.EventGrid/domains/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.EventGrid/topics"
-      },
-      {
-        "count": {
-          "field": "Microsoft.EventGrid/topics/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.EventGrid/topics/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.EventHub/namespaces"
-      },
-      {
-        "count": {
-          "field": "Microsoft.EventHub/namespaces/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.EventHub/namespaces/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.HealthcareApis/services"
-      },
-      {
-        "count": {
-          "field": "Microsoft.HealthcareApis/services/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.HealthcareApis/services/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Insights/privateLinkScopes"
-      },
-      {
-        "count": {
-          "field": "Microsoft.Insights/privateLinkScopes/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.Insights/privateLinkScopes/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.KeyVault/vaults"
-      },
-      {
-        "count": {
-          "field": "Microsoft.KeyVault/vaults/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.KeyVault/vaults/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.MachineLearningServices/workspaces"
-      },
-      {
-        "count": {
-          "field": "Microsoft.MachineLearningServices/workspaces/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.MachineLearningServices/workspaces/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Migrate/assessmentProjects"
-      },
-      {
-        "count": {
-          "field": "Microsoft.Migrate/assessmentProjects/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.Migrate/assessmentProjects/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Network/applicationgateways"
-      },
-      {
-        "count": {
-          "field": "Microsoft.Network/applicationgateways/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.Network/applicationgateways/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Network/privateLinkServices"
-      },
-      {
-        "count": {
-          "field": "Microsoft.Network/privateLinkServices/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.Network/privateLinkServices/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Purview/accounts"
-      },
-      {
-        "count": {
-          "field": "Microsoft.Purview/accounts/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.Purview/accounts/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.RecoveryServices/vaults"
-      },
-      {
-        "count": {
-          "field": "Microsoft.RecoveryServices/vaults/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.RecoveryServices/vaults/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Search/searchServices"
-      },
-      {
-        "count": {
-          "field": "Microsoft.Search/searchServices/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.Search/searchServices/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.SignalRService/SignalR"
-      },
-      {
-        "count": {
-          "field": "Microsoft.SignalRService/SignalR/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.SignalRService/SignalR/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Sql/servers"
-      },
-      {
-        "count": {
-          "field": "Microsoft.Sql/servers/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.Sql/servers/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Storage/storageAccounts"
-      },
-      {
-        "count": {
-          "field": "Microsoft.Storage/storageAccounts/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.Storage/storageAccounts/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Synapse/privateLinkHubs"
-      },
-      {
-        "count": {
-          "field": "Microsoft.Synapse/privateLinkHubs/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.Synapse/privateLinkHubs/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Synapse/workspaces"
-      },
-      {
-        "count": {
-          "field": "Microsoft.Synapse/workspaces/privateEndpointConnections[*]",
-          "where": {
-            "value": "[split(current('Microsoft.Synapse/workspaces/privateEndpointConnections[*].privateEndpoint.id'), '/')[2]]",
-            "notIn": "[parameters('allowedSubscriptions')]"
-          }
-        },
-        "greater": 0
-      }
-    ]
+    }
   }
-]
-		},
-		"then": {
-			"effect": "[parameters('effect')]"
-		}
-	},
-	"parameters": {
-		"effect":{
-			"type": "String",
-			"metadata": {
-				"displayName": "Select the effect of this policy",
-				"description": "Configures the effect of this policy. Default value is Audit."
-			},
-			"defaultValue": "Audit",
-			"allowedValues": [
-				"Audit",
-				"Deny",
-				"Disabled"
-			]
-		},
-		"allowedSubscriptions": {
-			"type": "Array",
-			"metadata": {
-				"displayName": "Allowed subscriptions",
-				"description": "List of subscriptions that contain resources allowed as a target for a Private Endpoint"
-			}
-		}
-	}
 }

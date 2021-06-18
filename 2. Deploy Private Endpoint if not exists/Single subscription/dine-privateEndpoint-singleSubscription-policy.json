@@ -33,8 +33,8 @@
 							"privateEndpointNamePrefix": {
 								"value": "[parameters('privateEndpointNamePrefix')]"
 							},
-							"excludedPrivateEndpointResourceTypes": {
-								"value": "[parameters('excludedPrivateEndpointResourceTypes')]"
+							"excludedPrivateLinkSubresourceType": {
+								"value": "[parameters('excludedPrivateLinkSubresourceType')]"
 							},
 							"scriptDeploymentStorageAccountId": {
 								"value": "[parameters('scriptDeploymentStorageAccountId')]"
@@ -62,7 +62,7 @@
 								"privateEndpointNamePrefix": {
 									"type": "string"
 								},
-								"excludedPrivateEndpointResourceTypes": {
+								"excludedPrivateLinkSubresourceType": {
 									"type": "array"
 								},
 								"scriptDeploymentStorageAccountId": {
@@ -183,8 +183,8 @@
 											"privateEndpointName": {
 												"value": "[concat(parameters('privateEndpointNamePrefix'),'-', uniqueString(split(parameters('resourceId'), '/')[4],'-', split(parameters('resourceId'), '/')[8]))]"
 											},
-											"excludedPrivateEndpointResourceTypes": {
-												"value": "[parameters('excludedPrivateEndpointResourceTypes')]"
+											"excludedPrivateLinkSubresourceType": {
+												"value": "[parameters('excludedPrivateLinkSubresourceType')]"
 											}
 										},
 										"template": {
@@ -206,7 +206,7 @@
 												"privateEndpointName": {
 													"type": "string"
 												},
-												"excludedPrivateEndpointResourceTypes": {
+												"excludedPrivateLinkSubresourceType": {
 													"type": "array"
 												}
 											},
@@ -214,7 +214,7 @@
 											"outputs": {},
 											"resources": [
 												{
-													"condition": "[not(contains(parameters('excludedPrivateEndpointResourceTypes'), concat(split(parameters('resourceId'), '/')[6],'/',split(parameters('resourceId'), '/')[7],'/',parameters('groupId')[copyIndex()])))]",
+													"condition": "[not(contains(parameters('excludedPrivateLinkSubresourceType'), concat(split(parameters('resourceId'), '/')[6],'/',split(parameters('resourceId'), '/')[7],'/',parameters('groupId')[copyIndex()])))]",
 													"name": "[concat(parameters('privateEndpointName'), parameters('groupId')[copyIndex()])]",
 													"type": "Microsoft.Network/privateEndpoints",
 													"apiVersion": "2020-08-01",
@@ -271,10 +271,10 @@
 			},
 			"defaultValue": "pe"
 		},
-		"excludedPrivateEndpointResourceTypes": {
+		"excludedPrivateLinkSubresourceType": {
 			"type": "Array",
 			"metadata": {
-				"displayName": "Group Ids excluded from private endpoint creation",
+				"displayName": "Subresources excluded from private endpoint creation",
 				"description": "A list of the group ids that you are not interested in creating a private endpoint automatically"
 			},
 			"defaultValue": [
@@ -318,7 +318,7 @@
 			"type": "Array",
 			"metadata": {
 				"displayName": "Resource types available to be evaluated",
-				"description": "Collection of resource types that would be automatically configured with a private endpoint using this policy if they are not exclude by parameter excludedPrivateEndpointResourceTypes"
+				"description": "Collection of resource types that would be automatically configured with a private endpoint using this policy if they are not exclude by parameter excludedPrivateLinkSubresourceType"
 			},
 			"defaultValue": [
 				"Microsoft.AppConfiguration/configurationStores",

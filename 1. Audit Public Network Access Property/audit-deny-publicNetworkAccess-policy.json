@@ -1,363 +1,339 @@
 {
-	"mode": "All",
-	"policyRule": {
-		"if": {
-			"anyOf": [
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.AppConfiguration/configurationStores"
-      },
-      {
-        "field": "Microsoft.AppConfiguration/configurationStores/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "anyOf": [
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.AppConfiguration/configurationStores"
+            },
+            {
+              "field": "Microsoft.AppConfiguration/configurationStores/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Automation/automationAccounts"
+            },
+            {
+              "field": "Microsoft.Automation/automationAccounts/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Batch/batchAccounts"
+            },
+            {
+              "field": "Microsoft.Batch/batchAccounts/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Cache/Redis"
+            },
+            {
+              "field": "Microsoft.Cache/Redis/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.CognitiveServices/accounts"
+            },
+            {
+              "field": "Microsoft.CognitiveServices/accounts/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.ContainerRegistry/registries"
+            },
+            {
+              "field": "Microsoft.ContainerRegistry/registries/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.DataFactory/factories"
+            },
+            {
+              "field": "Microsoft.DataFactory/factories/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.DBforMariaDB/servers"
+            },
+            {
+              "field": "Microsoft.DBforMariaDB/servers/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.DBForMySql/flexibleServers"
+            },
+            {
+              "field": "Microsoft.DBForMySql/flexibleServers/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.DBforMySQL/servers"
+            },
+            {
+              "field": "Microsoft.DBforMySQL/servers/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.DBForPostgreSql/flexibleServers"
+            },
+            {
+              "field": "Microsoft.DBForPostgreSql/flexibleServers/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.DBforPostgreSQL/servers"
+            },
+            {
+              "field": "Microsoft.DBforPostgreSQL/servers/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Devices/IotHubs"
+            },
+            {
+              "field": "Microsoft.Devices/IotHubs/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Devices/provisioningServices"
+            },
+            {
+              "field": "Microsoft.Devices/provisioningServices/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.DigitalTwins/digitalTwinsInstances"
+            },
+            {
+              "field": "Microsoft.DigitalTwins/digitalTwinsInstances/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.DocumentDB/databaseAccounts"
+            },
+            {
+              "field": "Microsoft.DocumentDB/databaseAccounts/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.EventGrid/domains"
+            },
+            {
+              "field": "Microsoft.EventGrid/domains/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.EventGrid/topics"
+            },
+            {
+              "field": "Microsoft.EventGrid/topics/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.HealthcareApis/services"
+            },
+            {
+              "field": "Microsoft.HealthcareApis/services/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.HybridCompute/privateLinkScopes"
+            },
+            {
+              "field": "Microsoft.HybridCompute/privateLinkScopes/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Migrate/assessmentProjects"
+            },
+            {
+              "field": "Microsoft.Migrate/assessmentProjects/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Purview/accounts"
+            },
+            {
+              "field": "Microsoft.Purview/accounts/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Search/searchServices"
+            },
+            {
+              "field": "Microsoft.Search/searchServices/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.SignalRService/webPubSub"
+            },
+            {
+              "field": "Microsoft.SignalRService/webPubSub/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Sql/servers"
+            },
+            {
+              "field": "Microsoft.Sql/servers/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Synapse/workspaces"
+            },
+            {
+              "field": "Microsoft.Synapse/workspaces/publicNetworkAccess",
+              "equals": "Enabled"
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
   },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Automation/automationAccounts"
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Select the effect of this policy",
+        "description": "Configures the desired effect of this policy. Default value is Audit. It supports also Deny and Disabled values."
       },
-      {
-        "field": "Microsoft.Automation/automationAccounts/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Batch/batchAccounts"
-      },
-      {
-        "field": "Microsoft.Batch/batchAccounts/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Cache/Redis"
-      },
-      {
-        "field": "Microsoft.Cache/Redis/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.CognitiveServices/accounts"
-      },
-      {
-        "field": "Microsoft.CognitiveServices/accounts/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.ContainerRegistry/registries"
-      },
-      {
-        "field": "Microsoft.ContainerRegistry/registries/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.DataFactory/factories"
-      },
-      {
-        "field": "Microsoft.DataFactory/factories/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.DBforMariaDB/servers"
-      },
-      {
-        "field": "Microsoft.DBforMariaDB/servers/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.DBForMySql/flexibleServers"
-      },
-      {
-        "field": "Microsoft.DBForMySql/flexibleServers/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.DBforMySQL/servers"
-      },
-      {
-        "field": "Microsoft.DBforMySQL/servers/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.DBForPostgreSql/flexibleServers"
-      },
-      {
-        "field": "Microsoft.DBForPostgreSql/flexibleServers/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.DBforPostgreSQL/servers"
-      },
-      {
-        "field": "Microsoft.DBforPostgreSQL/servers/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Devices/IotHubs"
-      },
-      {
-        "field": "Microsoft.Devices/IotHubs/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Devices/provisioningServices"
-      },
-      {
-        "field": "Microsoft.Devices/provisioningServices/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.DigitalTwins/digitalTwinsInstances"
-      },
-      {
-        "field": "Microsoft.DigitalTwins/digitalTwinsInstances/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.DocumentDB/databaseAccounts"
-      },
-      {
-        "field": "Microsoft.DocumentDB/databaseAccounts/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.EventGrid/domains"
-      },
-      {
-        "field": "Microsoft.EventGrid/domains/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.EventGrid/topics"
-      },
-      {
-        "field": "Microsoft.EventGrid/topics/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.HealthcareApis/services"
-      },
-      {
-        "field": "Microsoft.HealthcareApis/services/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.HybridCompute/privateLinkScopes"
-      },
-      {
-        "field": "Microsoft.HybridCompute/privateLinkScopes/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Migrate/assessmentProjects"
-      },
-      {
-        "field": "Microsoft.Migrate/assessmentProjects/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Purview/accounts"
-      },
-      {
-        "field": "Microsoft.Purview/accounts/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Search/searchServices"
-      },
-      {
-        "field": "Microsoft.Search/searchServices/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.SignalRService/webPubSub"
-      },
-      {
-        "field": "Microsoft.SignalRService/webPubSub/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Sql/servers"
-      },
-      {
-        "field": "Microsoft.Sql/servers/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Synapse/workspaces"
-      },
-      {
-        "field": "Microsoft.Synapse/workspaces/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Web/sites/config"
-      },
-      {
-        "field": "Microsoft.Web/sites/config/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  },
-  {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Web/sites/slots/config"
-      },
-      {
-        "field": "Microsoft.Web/sites/slots/config/publicNetworkAccess",
-        "equals": "Enabled"
-      }
-    ]
-  }
-]
-		},
-		"then": {
-			"effect": "[parameters('effect')]"
-		}
-	},
-	"parameters": {
-		"effect":{
-			"type": "String",
-			"metadata": {
-				"displayName": "Select the effect of this policy",
-				"description": "Configures the desired effect of this policy. Default value is Audit. It supports also Deny and Disabled values."
-			},
-			"defaultValue": "Audit",
-			"allowedValues": [
-				"Audit",
+      "defaultValue": "Audit",
+      "allowedValues": [
+        "Audit",
         "Deny",
-				"Disabled"
-			]
-		}
-	}
+        "Disabled"
+      ]
+    }
+  }
 }

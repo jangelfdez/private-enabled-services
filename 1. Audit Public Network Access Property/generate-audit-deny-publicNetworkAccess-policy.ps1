@@ -44,9 +44,9 @@ $supportedServices = @(
   "Microsoft.Search/searchServices",
   "Microsoft.SignalRService/webPubSub",
   "Microsoft.Sql/servers",
-  "Microsoft.Synapse/workspaces",
-  "Microsoft.Web/sites/config",
-  "Microsoft.Web/sites/slots/config"
+  "Microsoft.Synapse/workspaces"
+#  "Microsoft.Web/sites/config",
+#  "Microsoft.Web/sites/slots/config"
 )
 
 $anyOf = New-Object -TypeName "System.Collections.ArrayList"

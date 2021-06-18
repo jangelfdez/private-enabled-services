@@ -6,19 +6,19 @@
 				{
 					"field": "type",
 					"equals": "Microsoft.Network/privateEndpoints"
-				},
-				{
-          "count": {
-            "field": "Microsoft.Network/privateEndpoints/customDnsConfigs[*]"
-          },
-          "greaterOrEquals": 1
-        }
+				}
 			]
 		},
 		"then": {
 			"effect": "DeployIfNotExists",
 			"details": {
 				"type": "Microsoft.Network/privateEndpoints",
+				"name": "[field('name')]",
+				"existenceCondition": {
+					"count": {
+						"field": "Microsoft.Network/privateEndpoints/customDnsConfigs[*]"
+					}
+				},
 				"roleDefinitionIds": [
 					"/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
 				],
